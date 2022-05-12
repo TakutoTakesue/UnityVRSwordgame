@@ -32,16 +32,16 @@ public class PlayerScript : MonoBehaviour
 
 
     [SerializeField]
-    GameObject MenuCambas;
+    GameObject MenuCamvas;
 
 
     void Start()
     {
            Elapced = 0;
         Myanim = GetComponent<Animator>();
-        if (MenuCambas != null)
+        if (MenuCamvas != null)
         {
-            MenuCambas.SetActive(false);
+            MenuCamvas.SetActive(false);
         }
     }
 
@@ -61,8 +61,8 @@ public class PlayerScript : MonoBehaviour
         {
 
 
-           MenuCambas.SetActive(true);
-            MenuScript ss = MenuCambas.GetComponent<MenuScript>();
+           MenuCamvas.SetActive(true);
+            MenuScript ss = MenuCamvas.GetComponent<MenuScript>();
             ss.OpenMenu(new Vector3(0,0,0));
         }
 
