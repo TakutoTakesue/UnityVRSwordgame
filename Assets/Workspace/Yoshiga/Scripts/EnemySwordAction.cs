@@ -11,9 +11,10 @@ public class EnemySwordAction : MonoBehaviour
     public enum State
     {
         Entry,
-        Idle,
+        Idle,   
         Walk,
         Attack,
+        Defense,
         Hit,
         Wince,
         Death,
@@ -32,7 +33,8 @@ public class EnemySwordAction : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        playerScript = GetComponent<PlayerScript>();
+        playerScript = player.GetComponent<PlayerScript>();
+        Debug.Log(playerScript.walkspeed);
         myRB = GetComponent<Rigidbody>();
         myCollision = GetComponent<CapsuleCollider>();
         Instantiate(entryEffect,new Vector3(transform.position.x,
@@ -59,6 +61,7 @@ public class EnemySwordAction : MonoBehaviour
                 }
                 break;
             case State.Idle:
+                
                 if(AttackRange > Vector3.Distance(transform.position,player.transform.position))
                 {
                     myRB.velocity = new Vector3(transform.position.x - player.transform.position.x,
