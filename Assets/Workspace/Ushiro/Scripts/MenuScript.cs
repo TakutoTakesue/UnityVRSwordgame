@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using Math = System.Math;
 public class MenuScript : MonoBehaviour
 {
     [SerializeField]
@@ -14,7 +15,11 @@ public class MenuScript : MonoBehaviour
 
     [Space]
     [SerializeField]
-    Vector2 MaxWindowSize;
+    Vector3[] OpenWindowSize;
+
+    [Space]
+    [SerializeField]
+    Vector3[] CloseWindowSize;
 
     enum MENU
     {
@@ -36,7 +41,7 @@ public class MenuScript : MonoBehaviour
     }
 
 
-    void OpenMenu(Vector3 pos)
+  public  void OpenMenu(Vector3 pos)
     {
         transform.position = pos;
 
@@ -45,6 +50,7 @@ public class MenuScript : MonoBehaviour
         {
             DefaultButtons[i].gameObject.SetActive(true);
         }
+        StartCoroutine("OpeningMenu");
     }
     void TitleBack()
     {
@@ -86,27 +92,23 @@ public class MenuScript : MonoBehaviour
     }
     IEnumerator OpeningMenu()
     {
-        float WindowX = 0.1f;
-        float WindowY = 0.1f;
-
-
-        float XSpeed = 0.01f;
-        float YSpeed = 0.01f;
-
-        while (true) {
-            if (WindowY<1)
+        int Count = 0;
+        Vector3 ThisScale =new Vector3(0.1f,0,0);
+        while (Count<OpenWindowSize.Length) {
+            if (Vector3.Distance(ThisScale,OpenWindowSize[Count])>0.01f)
             {
-                YSpeed += 0.01f;
-                WindowX += XSpeed;
-                WindowY += YSpeed;
+
+                ThisScale.y = ThisScale.y - (ThisScale.y - OpenWindowSize[Count].y) * 0.2f;
+                ThisScale.x = ThisScale.x - (ThisScale.x - OpenWindowSize[Count].x) * 0.2f;
             }
             else
             {
-            
+                ThisScale = OpenWindowSize[Count];
+                Count++;
             }
 
-
-            yield return new WaitForSeconds(Random.Range(1.0f, 5.0f));
+            this.transform.localScale = ThisScale;
+            yield return new WaitForSeconds(0.01f);
         } 
     }
 }

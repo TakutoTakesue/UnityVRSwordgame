@@ -29,9 +29,16 @@ public class PlayerScript : MonoBehaviour
     public float walkspeed => WalkSpeed;
     Animator Myanim;
 
+
+
+    [SerializeField]
+    GameObject MenuCambas;
+
+
     void Start()
     {
-        Elapced = 0;
+        MenuCambas.SetActive(false);
+           Elapced = 0;
         Myanim = GetComponent<Animator>();
     }
 
@@ -46,6 +53,14 @@ public class PlayerScript : MonoBehaviour
                 Myanim.Update(0f);
                 StunTime = Myanim.GetCurrentAnimatorStateInfo(0).length;
             }
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+
+
+           MenuCambas.SetActive(true);
+            MenuScript ss = MenuCambas.GetComponent<MenuScript>();
+            ss.OpenMenu(new Vector3(0,0,0));
         }
 
         InputMove.x = Input.GetAxis("Horizontal");
