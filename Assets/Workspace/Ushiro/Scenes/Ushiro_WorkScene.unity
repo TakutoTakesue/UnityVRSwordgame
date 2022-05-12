@@ -308,10 +308,10 @@ MonoBehaviour:
   TitleBackButtons: []
   OpenWindowSize:
   - {x: 0.1, y: 1.5, z: 0}
-  - {x: 1.5, y: 0.7, z: 0}
+  - {x: 1.5, y: 0.3, z: 0}
   - {x: 1, y: 1, z: 0}
   CloseWindowSize: []
-  WindowSizeChangeSpeed: 0
+  WindowSizeChangeSpeed: 0.3
 --- !u!1 &412177110
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,7 +442,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1, y: 1}
+  m_SizeDelta: {x: 1.5, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &597467046
 MonoBehaviour:
@@ -489,6 +489,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5990382465474964638, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
+      propertyPath: MenuCambas
+      value: 
+      objectReference: {fileID: 388284607}
+    - target: {fileID: 5990382465474964638, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
+      propertyPath: MenuCamvas
+      value: 
+      objectReference: {fileID: 388284607}
     - target: {fileID: 7500612692919176122, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
       propertyPath: m_Name
       value: unitychan
@@ -507,7 +515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7500612692919211930, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 6.64
       objectReference: {fileID: 0}
     - target: {fileID: 7500612692919211930, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
       propertyPath: m_LocalRotation.w

@@ -5836,7 +5836,7 @@ MonoBehaviour:
   minPitch: -60
   MyCamera: {fileID: 534805214523909392}
   WalkSpeed: 4
-  MenuCambas: {fileID: 0}
+  MenuCamvas: {fileID: 0}
 --- !u!54 &584245430072383
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5863,10 +5863,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1
+  m_Radius: 0.2
+  m_Height: 1.5
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.7282297, z: 0}
 --- !u!1 &7500612692919176124
 GameObject:
   m_ObjectHideFlags: 0
