@@ -21,6 +21,9 @@ public class MenuScript : MonoBehaviour
     [SerializeField]
     Vector3[] CloseWindowSize;
 
+    [SerializeField]
+    float WindowSizeChangeSpeed = 0;
+
     enum MENU
     {
         DEFAULT,
@@ -98,8 +101,8 @@ public class MenuScript : MonoBehaviour
             if (Vector3.Distance(ThisScale,OpenWindowSize[Count])>0.01f)
             {
 
-                ThisScale.y = ThisScale.y - (ThisScale.y - OpenWindowSize[Count].y) * 0.2f;
-                ThisScale.x = ThisScale.x - (ThisScale.x - OpenWindowSize[Count].x) * 0.2f;
+                ThisScale.y = ThisScale.y - (ThisScale.y - OpenWindowSize[Count].y) * WindowSizeChangeSpeed;
+                ThisScale.x = ThisScale.x - (ThisScale.x - OpenWindowSize[Count].x) * WindowSizeChangeSpeed;
             }
             else
             {

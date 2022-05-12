@@ -37,9 +37,12 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
-        MenuCambas.SetActive(false);
            Elapced = 0;
         Myanim = GetComponent<Animator>();
+        if (MenuCambas != null)
+        {
+            MenuCambas.SetActive(false);
+        }
     }
 
    void Update()
