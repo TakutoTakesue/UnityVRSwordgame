@@ -28,6 +28,9 @@ public class KnightAction : EnemyScript
     [SerializeField] private GameObject entryEffect;
     [Header("攻撃範囲 : m")]
     [SerializeField] private float attackRange;
+    [Header("攻撃のインターバル : s")]
+    [SerializeField] private float AttackIntervalTime;
+    private float attackInterval;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +44,7 @@ public class KnightAction : EnemyScript
                                             transform.position.y + enemyYScale + 0.1f,
                                             transform.position.z), Quaternion.Euler(90, 0, 0));
         entrySpeed = enemyYScale * (Time.deltaTime / 3);
+        attackInterval = AttackIntervalTime;
     }
 
     private void FixedUpdate()
@@ -55,7 +59,7 @@ public class KnightAction : EnemyScript
                     transform.position += new Vector3(0, entrySpeed, 0);
                     if (transform.position.y > 0)
                     {
-                        myState = State.Idle;
+                        myState = State.Walk;
                         myRB.useGravity = true;
                         myCollision.enabled = true;
                     }
@@ -64,9 +68,33 @@ public class KnightAction : EnemyScript
             case State.Idle:
 
                 // プレイヤーとの距離が近すぎるときに遠ざかる
-                if (attackRange > Vector3.Distance(transform.position, player.transform.position))
+                if (attackRange > Vector3.Distance(transform.position, player.transform.position) && attackInterval > 0)
                 {
-                    myRB.velocity = (transform.position - player.transform.position).normalized * mySpeed;
+                    myRB.velocity = (transform.position - player.transform.position).normalized * mySpeed / 2;
+                    myAnim.SetFloat("Speed", -mySpeed);
+                }
+                else
+                {
+                    if (attackInterval <= 0)
+                    {
+                        myState = State.Attack;
+                        myAnim.SetTrigger("Attack");
+                    }
+                    myAnim.SetFloat("Speed", 0);
+                }
+                break;
+            case State.Walk:
+
+                // プレイヤーとの距離が離れているとプレイヤーに向かって歩く処理
+                if(attackRange <= Vector3.Distance(transform.position, player.transform.position))
+                {
+                    myRB.velocity = (player.transform.position - transform.position).normalized * mySpeed;
+                    myAnim.SetFloat("Speed", mySpeed);
+                }
+                else
+                {
+                    myRB.velocity = Vector3.zero;
+                    myState = State.Idle;
                 }
                 break;
         }
@@ -81,6 +109,10 @@ public class KnightAction : EnemyScript
     // Update is called once per frame
     void Update()
     {
-
+        // 攻撃のインターバルを減らす
+        if(attackInterval > 0)
+        {
+            attackInterval -= Time.deltaTime;
+        }
     }
 }
