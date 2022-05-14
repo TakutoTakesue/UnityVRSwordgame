@@ -6399,10 +6399,10 @@ MonoBehaviour:
   maxPitch: 60
   minPitch: -60
   MyCamera: {fileID: 534805214523909392}
-  LookPos: {fileID: 0}
+  LookPos: {fileID: 7861362105106125625}
   WalkSpeed: 4
-  MenuUI: {fileID: 0}
-  MenuPos: {fileID: 0}
+  MenuUI: {fileID: 5624605290899053902}
+  MenuPos: {fileID: 4377587888478331624}
 --- !u!54 &584245430072383
 Rigidbody:
   m_ObjectHideFlags: 0
