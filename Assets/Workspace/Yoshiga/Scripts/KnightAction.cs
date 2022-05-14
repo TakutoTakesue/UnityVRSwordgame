@@ -20,7 +20,7 @@ public class KnightAction : EnemyScript
         Death,
     }
 
-    private State myState = State.Entry;    // 敵のステータス
+    public State myState = State.Entry;    // 敵のステータス
     [Header("敵の身長 : m")]
     [SerializeField] private float enemyYScale;
     private float entrySpeed;   // 敵が登場する時の地面から出てくる速さ
@@ -104,6 +104,12 @@ public class KnightAction : EnemyScript
             // プレイヤーの方に向く
             gameObject.transform.LookAt(player.transform.position);
         }
+    }
+
+    void AttackFinish()
+    {
+        attackInterval = AttackIntervalTime;
+        myState = State.Idle;
     }
 
     // Update is called once per frame
