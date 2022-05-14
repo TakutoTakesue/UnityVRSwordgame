@@ -1754,6 +1754,7 @@ GameObject:
   - component: {fileID: 8111910650232277978}
   - component: {fileID: 8111910648891570671}
   - component: {fileID: 8111910648891570668}
+  - component: {fileID: 1498881455}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -1828,6 +1829,23 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &1498881455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8111910650224900518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a22d57924f73ec6418b38f8c8e40b719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HP: 10
+  mySpeed: 4
+  enemyYScale: 2
+  entryEffect: {fileID: 100008, guid: e3d819d8722fa1f47a3f68574b56dfb3, type: 3}
+  attackRange: 4
 --- !u!1 &8111910650224900520
 GameObject:
   m_ObjectHideFlags: 0
