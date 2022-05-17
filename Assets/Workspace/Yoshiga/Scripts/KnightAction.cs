@@ -20,7 +20,7 @@ public class KnightAction : EnemyScript
         Death,
     }
 
-    private State myState = State.Entry;    // 敵のステータス
+    public State myState = State.Entry;    // 敵のステータス
     [Header("敵の身長 : m")]
     [SerializeField] private float enemyYScale;
     private float entrySpeed;   // 敵が登場する時の地面から出てくる速さ
@@ -31,6 +31,9 @@ public class KnightAction : EnemyScript
     [Header("攻撃のインターバル : s")]
     [SerializeField] private float AttackIntervalTime;
     private float attackInterval;
+    [Header("サイドステップのインターバル : s")]
+    [SerializeField] private float StepIntervalTime;
+    private float stepInterval;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +48,7 @@ public class KnightAction : EnemyScript
                                             transform.position.z), Quaternion.Euler(90, 0, 0));
         entrySpeed = enemyYScale * (Time.deltaTime / 3);
         attackInterval = AttackIntervalTime;
+        stepInterval = StepIntervalTime;
     }
 
     private void FixedUpdate()
@@ -67,20 +71,67 @@ public class KnightAction : EnemyScript
                 break;
             case State.Idle:
 
+                // 攻撃のインターバルを減らす
+                if (attackInterval > 0)
+                {
+                    attackInterval -= Time.deltaTime;
+                }
+
+                // 少し離れたら追いかける処理
+                if (attackRange + 0.5f < Vector3.Distance(transform.position, player.transform.position))
+                {
+                    myAnim.SetBool("StepFlg", false);
+                    myState = State.Walk;
+                    break;
+                }
+
                 // プレイヤーとの距離が近すぎるときに遠ざかる
                 if (attackRange > Vector3.Distance(transform.position, player.transform.position) && attackInterval > 0)
                 {
                     myRB.velocity = (transform.position - player.transform.position).normalized * mySpeed / 2;
+                    myAnim.SetBool("StepFlg", false);
                     myAnim.SetFloat("Speed", -mySpeed);
                 }
-                else
+                else if(attackRange <= Vector3.Distance(transform.position, player.transform.position))
                 {
+                    // サイドステップ切り替え処理
+                    if (stepInterval > 0)
+                    {
+                        stepInterval -= Time.deltaTime;
+                        if (stepInterval <= 0)
+                        {
+                            stepInterval = StepIntervalTime;
+                            if(myAnim.GetFloat("StepVector") >= 0.5f)
+                            {
+                                myAnim.SetFloat("StepVector", 0.0f);
+                            }
+                            else
+                            {
+                                myAnim.SetFloat("StepVector", 1.0f);
+                            }
+                        }
+                    }
+
+                    if (myAnim.GetFloat("StepVector") >= 0.5f)
+                    {
+                        transform.RotateAround(player.transform.position, Vector3.up, 20 * Time.deltaTime);
+                    }
+                    else
+                    {
+                        transform.RotateAround(player.transform.position, Vector3.up, -20 * Time.deltaTime);
+                    }
+
+                    // 攻撃に移る処理
                     if (attackInterval <= 0)
                     {
+                        myAnim.SetFloat("Speed", 0);
                         myState = State.Attack;
-                        myAnim.SetTrigger("Attack");
+                        myAnim.SetTrigger("Attack");  
+                        myAnim.SetBool("StepFlg", false);
+                        break;
                     }
                     myAnim.SetFloat("Speed", 0);
+                    myAnim.SetBool("StepFlg", true);
                 }
                 break;
             case State.Walk:
@@ -110,16 +161,11 @@ public class KnightAction : EnemyScript
     {
         attackInterval = AttackIntervalTime;
         myState = State.Idle;
-        Debug.Log("aaaaa");
     }
 
     // Update is called once per frame
     void Update()
     {
-        // 攻撃のインターバルを減らす
-        if(attackInterval > 0)
-        {
-            attackInterval -= Time.deltaTime;
-        }
+        
     }
 }
