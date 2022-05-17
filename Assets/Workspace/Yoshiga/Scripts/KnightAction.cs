@@ -106,7 +106,7 @@ public class KnightAction : EnemyScript
         }
     }
 
-    void AttackFinish()
+    public void AttackFinish()
     {
         attackInterval = AttackIntervalTime;
         myState = State.Idle;
