@@ -1842,10 +1842,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 10
-  mySpeed: 4
+  mySpeed: 2
   enemyYScale: 2
   entryEffect: {fileID: 100008, guid: e3d819d8722fa1f47a3f68574b56dfb3, type: 3}
-  attackRange: 4
+  attackRange: 2
+  AttackIntervalTime: 5
 --- !u!1 &8111910650224900520
 GameObject:
   m_ObjectHideFlags: 0

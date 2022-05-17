@@ -234,18 +234,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1498881455, guid: 78f267e17bb14f440b27808faff2f469, type: 3}
-      propertyPath: mySpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1498881455, guid: 78f267e17bb14f440b27808faff2f469, type: 3}
-      propertyPath: attackRange
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1498881455, guid: 78f267e17bb14f440b27808faff2f469, type: 3}
-      propertyPath: AttackIntervalTime
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 8111910650224796742, guid: 78f267e17bb14f440b27808faff2f469, type: 3}
       propertyPath: m_RootOrder
       value: 3
