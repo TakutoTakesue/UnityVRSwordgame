@@ -20,7 +20,7 @@ public class KnightAction : EnemyScript
         Death,
     }
 
-    public State myState = State.Entry;    // 敵のステータス
+    private State myState = State.Entry;    // 敵のステータス
     [Header("敵の身長 : m")]
     [SerializeField] private float enemyYScale;
     private float entrySpeed;   // 敵が登場する時の地面から出てくる速さ
