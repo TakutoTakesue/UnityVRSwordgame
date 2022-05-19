@@ -12,40 +12,39 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     Vector2 Bias = new Vector2(5.0f, 5.0f); //回転速度
     [SerializeField]
-     float maxPitch = 60.0f; //仰角制限
+    float maxPitch = 60.0f; //仰角制限
     [SerializeField]
-     float minPitch = -60.0f; //俯角制限
+    float minPitch = -60.0f; //俯角制限
     [SerializeField]
-     Camera MyCamera;
+    Camera MyCamera;
 
+    [SerializeField]
+    GameObject LookPos;     //キャラの注視点
     float ThirdParsonDistance;
     const float StunDistance = 3.0f;
-     float StunTime = 0.25f;
+    float StunTime = 0.25f;
     bool StunFlg;
     float Elapced;
     Vector3 InputMove;         //スティック入力
     [SerializeField]
-     float WalkSpeed = 4.0f; //歩く速度
+    float WalkSpeed = 4.0f; //歩く速度
     public float walkspeed => WalkSpeed;
     Animator Myanim;
 
-
+    [SerializeField]
+    GameObject MenuUI;
 
     [SerializeField]
-    GameObject MenuCamvas;
-
+    GameObject MenuPos;     //メニューを開くときの場所
 
     void Start()
     {
-           Elapced = 0;
+        Elapced = 0;
         Myanim = GetComponent<Animator>();
-        if (MenuCamvas != null)
-        {
-            MenuCamvas.SetActive(false);
-        }
+        MenuUI.SetActive(false);
     }
 
-   void Update()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -59,18 +58,38 @@ public class PlayerScript : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
+            MenuUI.SetActive(true);
+            MenuScript menu = MenuUI.GetComponent<MenuScript>();
+            if (menu != null)
+            {
+                menu.OpenMenu(MenuPos.transform.position);
+            }
 
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            MenuScript menu = MenuUI.GetComponent<MenuScript>();
+            if (menu != null)
+            {
+                menu.CloseMenu();
+            }
 
-           MenuCamvas.SetActive(true);
-            MenuScript ss = MenuCamvas.GetComponent<MenuScript>();
-            ss.OpenMenu(new Vector3(0,0,0));
         }
 
         InputMove.x = Input.GetAxis("Horizontal");
         InputMove.z = Input.GetAxis("Vertical");
 
     }
+    private void OnAnimatorIK(int layerIndex)
+    {
+        if (!StunFlg)
+        {
+            //顔をカメラの向きと連動させる
+            Myanim.SetLookAtWeight(1.0f, 0.0f, 1.0f, 0.0f, 0.5f);
+            Myanim.SetLookAtPosition(LookPos.transform.position);
+        }
 
+    }
     //スマート機器の回転系をUnityでの回転系に変換する関数
     Quaternion GyroToUnity(Quaternion q)
     {
@@ -84,13 +103,15 @@ public class PlayerScript : MonoBehaviour
     {
         if (StunFlg)
         {
+
+            //スタン中のカメラの移動
             Elapced += Time.fixedDeltaTime;
 
-            if (Elapced<0.25)
+            if (Elapced < 0.25)
             {
                 ThirdParsonDistance = StunDistance * Elapced / 0.25f;
             }
-            else if (Elapced>StunTime-0.25)
+            else if (Elapced > StunTime - 0.25)
             {
                 ThirdParsonDistance = StunDistance * (StunTime - Elapced) / 0.25f;
             }
@@ -125,6 +146,7 @@ public class PlayerScript : MonoBehaviour
             {
                 if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
                 {
+                    //キーマウでの操作(デバッグ用)
 
                     float a = (absInput.x > absInput.z) ? absInput.x : absInput.z;            //xとzどっちが長いか判断
                     Speed.x = a * a * InputMove.x / Mathf.Sqrt(InputMove.x * InputMove.x + InputMove.z * InputMove.z);
@@ -136,6 +158,7 @@ public class PlayerScript : MonoBehaviour
                     Speed.z = InputMove.z;
 
                 }
+                //移動方向を算出
                 Speed = axisDirV * Speed.z + axisDirH * Speed.x;
                 dir = Speed * WalkSpeed;
                 transform.position += dir * Time.fixedDeltaTime;
@@ -185,6 +208,7 @@ public class PlayerScript : MonoBehaviour
             axisDirV = axisDirV * ((ThirdParsonDistance > StunDistance) ? StunDistance : ThirdParsonDistance);
             axisDirV.y = -1;
             campos -= axisDirV;
+            campos.y += 0.4f;
             MyCamera.transform.position = campos;
 
         }
@@ -195,10 +219,5 @@ public class PlayerScript : MonoBehaviour
         }
 
 
-
-
-
-
-
-    } 
+    }
 }
