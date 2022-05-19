@@ -220,4 +220,8 @@ public class PlayerScript : MonoBehaviour
 
 
     }
+    public void OnDamage(int damage)
+    {
+
+    }
 }
