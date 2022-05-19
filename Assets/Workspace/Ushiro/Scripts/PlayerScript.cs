@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using Math = System.Math;
 
@@ -37,16 +38,47 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     GameObject MenuPos;     //メニューを開くときの場所
 
+
+
+    [SerializeField]
+    int StartLife;               //自身のHPの初期値
+    [SerializeField]
+    Image LifeGageImage;               //自身のHP(ゲージ)
+    [SerializeField]
+    Image KasouLifeGageImage;              //自身の仮想HP(ゲージ)
+    int Life;               //自身のHP
+    float KasouLife;               //自身の仮想HP
+    int KeepDamage;             //最後に受けたダメージ(連続の場合合算)
+    float LifeDelay;               //HPの変動
+    float HPlessDelay;              //HPゲージが減り始めるまでの時間管理
+    bool deadflg;               //死んでいるかどうか
+    public Text LifeTex;
     void Start()
     {
         Elapced = 0;
         Myanim = GetComponent<Animator>();
         MenuUI.SetActive(false);
+
+
+        KasouLife = StartLife;
+        Life = StartLife;
+        LifeDelay = 0;
+
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+
+
+        if (Input.GetKey(KeyCode.G))
+        {
+            Life--;
+        
+        }
+
+
+
+            if (Input.GetKeyDown(KeyCode.Space))
         {
             if (!StunFlg)
             {
@@ -99,8 +131,27 @@ public class PlayerScript : MonoBehaviour
         return new Quaternion(-q.x, -q.z, -q.y, q.w) * Quaternion.Euler(90f, 0f, 0f);
     }
     private void FixedUpdate()
-
     {
+        if (Life != KasouLife)
+        {
+            LifeDelay -= Time.fixedDeltaTime;
+            if (LifeDelay < 0)
+            {
+                KasouLife -= KeepDamage * Time.fixedDeltaTime * 3;
+                if (KasouLife < Life)
+                {
+
+                    KasouLife = Life;
+                }
+            }
+        }
+
+        LifeGageImage.fillAmount = (float)Life / StartLife;
+        UnityEngine.Debug.Log(Life / StartLife);
+        KasouLifeGageImage.fillAmount = KasouLife / StartLife;
+        LifeTex.text = "LIFE：" + Life.ToString("d3");
+
+
         if (StunFlg)
         {
 
@@ -223,6 +274,25 @@ public class PlayerScript : MonoBehaviour
     }
     public void OnDamage(int damage)
     {
+        if (!deadflg)
+        {
+            if (LifeDelay < 0)
+            {
+                KasouLife = Life;
+                KeepDamage = damage;
+            }
+            else
+            {
+                KeepDamage += damage;
+            }
+            LifeDelay = 0.5f;
+            Life -= damage;
 
+            if (Life < 0)
+            {
+                Life = 0;
+                deadflg = true;
+            }
+        }
     }
 }
