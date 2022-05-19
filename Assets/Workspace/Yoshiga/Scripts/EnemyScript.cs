@@ -8,7 +8,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] protected int HP;
     [Header("“G‚ÌˆÚ“®‘¬“x : float")]
     [SerializeField] protected float mySpeed;
-    [Header("UŒ‚—Í : int")]
+    [Header("“G‚ÌUŒ‚—Í : int")]
     [SerializeField] protected int power;
 
     // Start is called before the first frame update

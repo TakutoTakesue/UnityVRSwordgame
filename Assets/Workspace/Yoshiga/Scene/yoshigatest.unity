@@ -569,8 +569,9 @@ MonoBehaviour:
   HP: 10
   mySpeed: 1
   power: 1
-  range: 1
+  myState: 0
+  range: 5
   moveRadius: 5
   idleIntervalTime: 4
-  attackRange: 0
-  AttackIntervalTime: 0
+  attackRange: 3
+  AttackIntervalTime: 5
