@@ -74,14 +74,14 @@ public class ColliderAction : MonoBehaviour
             //アイテムに緑になる指示を出す
             script.ChangeColor(Color.green);
             //右人差し指かスペースキー押下中なら
-            //if (OVRInput.Get(OVRInput.RawButton.RIndexTrigger) ||
-            //Input.GetKey(KeyCode.Space))
-            //{
-            //    script.GetWeapon(controller.transform, haveHand);
-            //    //アイテムに掴んでいる指示trueを出し続ける
-            //    script.Grabed(true);
-            //    weaponHaveFlg = true;
-            //}
+            if (OVRInput.Get(OVRInput.RawButton.RIndexTrigger) ||
+            Input.GetKey(KeyCode.Space))
+            {
+                script.GetWeapon(controller.transform, haveHand);
+                //アイテムに掴んでいる指示trueを出し続ける
+                script.Grabed(true);
+                weaponHaveFlg = true;
+            }
             ////右人差し指かスペースキーが離れた瞬間
             //if (OVRInput.GetUp(OVRInput.RawButton.RIndexTrigger) ||
             //Input.GetKeyUp(KeyCode.Space))
