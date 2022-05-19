@@ -198,6 +198,7 @@ public class PlayerScript : MonoBehaviour
             }
             else
             {
+                
                 Rot.x = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * Bias.x;
                 Rot.y += Input.GetAxis("Mouse Y") * Bias.y;
                 Rot.y = Mathf.Clamp(Rot.y, minPitch, maxPitch);
