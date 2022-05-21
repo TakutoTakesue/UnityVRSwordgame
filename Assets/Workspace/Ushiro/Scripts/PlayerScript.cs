@@ -39,6 +39,10 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField]
     GameObject MenuPos;     //メニューを開くときの場所
+    [SerializeField]
+    GameObject RightHand;     //右手
+    [SerializeField]
+    GameObject LeftHand;     //左手
 
 
 
@@ -57,6 +61,19 @@ public class PlayerScript : MonoBehaviour
     public Text LifeTex;
     void Start()
     {
+
+        //消すやつ
+
+        RightHand.transform.position = new Vector3(0.3700722f, -0.5688783f, -0.1231707f);
+        RightHand.transform.rotation = new Quaternion(107.09f, 573.226f, 510.86f, 0);
+        LeftHand.transform.position = new Vector3(-0.3612857f, -0.5318148f, -0.1369106f);
+        LeftHand.transform.rotation = new Quaternion(-255.33f, -375.268f, -375.268f, 0);
+
+        //消すやつここまで
+
+
+
+
         Elapced = 0;
         Myanim = GetComponent<Animator>();
         MenuUI.SetActive(false);
@@ -70,6 +87,9 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
+        //消すやつ
+
+
 
 
         if (Input.GetKey(KeyCode.G))
@@ -114,7 +134,7 @@ public class PlayerScript : MonoBehaviour
             }
 
         }
-
+        //消すやつここまで
         InputMove.x = Input.GetAxis("Horizontal");
         InputMove.z = Input.GetAxis("Vertical");
 
@@ -126,6 +146,27 @@ public class PlayerScript : MonoBehaviour
             //顔をカメラの向きと連動させる
             Myanim.SetLookAtWeight(1.0f, 0.0f, 1.0f, 0.0f, 0.5f);
             Myanim.SetLookAtPosition(LookPos.transform.position);
+
+
+
+            //　右手のIKのウエイト設定
+            Myanim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
+            Myanim.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
+            //　左手のIKのウエイト設定
+            Myanim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1);
+            Myanim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1);
+            //　右手の位置設定
+            Myanim.SetIKPosition(AvatarIKGoal.RightHand, RightHand.transform.position);
+            Myanim.SetIKRotation(AvatarIKGoal.RightHand, RightHand.transform.rotation);
+            //　左手の位置設定
+            Myanim.SetIKPosition(AvatarIKGoal.LeftHand, LeftHand.transform.position);
+            Myanim.SetIKRotation(AvatarIKGoal.LeftHand, LeftHand.transform.rotation);
+
+
+
+
+
+
         }
 
     }

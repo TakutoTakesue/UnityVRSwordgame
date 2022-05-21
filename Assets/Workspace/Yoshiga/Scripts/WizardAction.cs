@@ -23,6 +23,8 @@ public class WizardAction : EnemyScript
     [SerializeField] private float range;
     [Header("登場時のエフェクト : Object")]
     [SerializeField] private GameObject entryEffect;
+    [Header("詠唱エフェクト : Object")]
+    [SerializeField] private GameObject chargeEffect;
     [Header("攻撃のインターバル : s")]
     [SerializeField] private float AttackIntervalTime;
     private float attackInterval;
@@ -30,6 +32,7 @@ public class WizardAction : EnemyScript
     [SerializeField] private float ChargeIntervalTime;
     private float chargeInterval;
     private bool isTarget;  // プレイヤーを見つけているかのフラグ
+    private GameObject targetPlayer; // 狙っている敵(ターゲット)
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +44,7 @@ public class WizardAction : EnemyScript
         isTarget = false;
         attackInterval = AttackIntervalTime;
         chargeInterval = ChargeIntervalTime;
+        battleFlg = true;
     }
 
     private void FixedUpdate()
@@ -53,6 +57,12 @@ public class WizardAction : EnemyScript
                     if(attackInterval > 0 && battleFlg)
                     {
                         attackInterval -= Time.deltaTime;
+                        if(attackInterval <= 0)
+                        {
+                            attackInterval = AttackIntervalTime;
+                            chargeEffect.SetActive(true);
+                            myState = State.Attack;
+                        }
                     }
                 }
                 break;
@@ -62,6 +72,10 @@ public class WizardAction : EnemyScript
                 if(chargeInterval > 0)
                 {
                     chargeInterval -= Time.deltaTime;
+                    if(chargeInterval <= 0)
+                    {
+
+                    }
                 }
                 break;
         }

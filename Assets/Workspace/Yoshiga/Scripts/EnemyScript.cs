@@ -18,12 +18,12 @@ public class EnemyScript : MonoBehaviour
         battleFlg = false;
     }
 
-    protected void OnDamage(int num)
+    public void OnDamage(int num)
     {
         HP -= num;
     }
 
-    protected void ChangeBattleFlg()
+    public void ChangeBattleFlg()
     {
         battleFlg = !battleFlg;
     }
