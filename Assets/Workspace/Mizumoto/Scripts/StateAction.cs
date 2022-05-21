@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class StateAction : MonoBehaviour
 {
+    #region シリアライズ変数
     [SerializeField,Header("体力の最大値")]
     protected int hpMax;
     protected int hp;   // 現在の体力
@@ -12,7 +13,7 @@ public class StateAction : MonoBehaviour
     [SerializeField, Header("攻撃力")]
     protected int atk;
     public int ATK => atk;  // ゲッター
-
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
