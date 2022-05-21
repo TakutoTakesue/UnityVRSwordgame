@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShieldAction : MonoBehaviour
+public class ShieldAction : WeaponBase
 {
     [SerializeField, Header("攻撃のカット率")]
     float CutRate = 75.0f;
+    [SerializeField, Header("攻撃をはじく処理")]
+    bool parryFlg = false;
+    bool ParryFlg => parryFlg;  // ゲット変数
     // PlayerAction playeraction
     // Start is called before the first frame update
     void Start()
