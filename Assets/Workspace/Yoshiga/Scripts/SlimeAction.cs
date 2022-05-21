@@ -11,7 +11,6 @@ public class SlimeAction : EnemyScript
     {
         Idle,
         Walk,
-        Discover,
         Attack,
         Hit,
         Death,
@@ -52,14 +51,14 @@ public class SlimeAction : EnemyScript
                 
                 if(isTarget)
                 {
-                    if(attackInterval > 0)
+                    if(attackInterval > 0 && battleFlg)
                     {
                         attackInterval -= Time.deltaTime;
                     }
                 }
                 else
                 {
-                    if (idleInterval > 0)
+                    if (idleInterval > 0 && !isTarget)
                     {
                         idleInterval -= Time.deltaTime;
                         if (idleInterval <= 0)
@@ -95,6 +94,8 @@ public class SlimeAction : EnemyScript
         if(!isTarget && range >= Vector3.Distance(transform.position, player.transform.position))
         {
             isTarget = true;
+            myState = State.Idle;
+            myAnim.SetTrigger("Jump");
         }
 
         if (isTarget)
@@ -107,11 +108,14 @@ public class SlimeAction : EnemyScript
     public void JumpFinish()
     {
         myState = State.Walk;
-        myAnim.SetBool("Move", true);    
-        destination = SetDestination();
-        // 目的地を向く
-        gameObject.transform.LookAt(destination);
-        idleInterval = idleIntervalTime;
+        myAnim.SetBool("Move", true);   
+        if(!isTarget)
+        {
+            destination = SetDestination();
+            // 目的地を向く
+            gameObject.transform.LookAt(destination);
+            idleInterval = idleIntervalTime;
+        }    
     }
 
     // 目的地をランダムで返す処理

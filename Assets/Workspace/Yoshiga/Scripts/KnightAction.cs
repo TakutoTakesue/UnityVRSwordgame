@@ -72,7 +72,7 @@ public class KnightAction : EnemyScript
             case State.Idle:
 
                 // 攻撃のインターバルを減らす
-                if (attackInterval > 0)
+                if (attackInterval > 0 && battleFlg)
                 {
                     attackInterval -= Time.deltaTime;
                 }
