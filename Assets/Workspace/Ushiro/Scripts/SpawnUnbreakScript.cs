@@ -4,15 +4,35 @@ using UnityEngine;
 
 public class SpawnUnbreakScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+
+    private static bool Loaded { get; set; }
+
+    [SerializeField]
+    GameObject[] gameManagerPrefabs = null;
+
+
+    void Awake()
     {
-        
+        //すでにロード済みなら、二重に作成しない
+        if (Loaded) return;
+
+        Loaded = true;
+
+        //プレハブをインスタンス化して、DontDestroyOnLoad
+        foreach (var prefab in gameManagerPrefabs)
+        {
+            GameObject GameIndex = Instantiate(prefab);
+            DontDestroyOnLoad(GameIndex);
+        }
     }
 
-    // Update is called once per frame
+    void Start()
+    {
+    }
+
     void Update()
     {
-        
+
     }
 }

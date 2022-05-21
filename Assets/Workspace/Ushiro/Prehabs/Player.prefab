@@ -6526,6 +6526,8 @@ MonoBehaviour:
   WalkSpeed: 4
   MenuUI: {fileID: 5624605290899053902}
   MenuPos: {fileID: 4377587888478331624}
+  RightHand: {fileID: 5217365590496082215}
+  LeftHand: {fileID: 2418258825530432419}
   StartLife: 1500
   LifeGageImage: {fileID: 5355359689141243315}
   KasouLifeGageImage: {fileID: 9092538032401260750}
@@ -7989,6 +7991,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a199e750819fb71448201f9c941922e9, type: 3}
+--- !u!1 &2418258825530432419 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4662715857912129882, guid: a199e750819fb71448201f9c941922e9, type: 3}
+  m_PrefabInstance: {fileID: 7005959210988942073}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5217365590496082215 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2980789853182118878, guid: a199e750819fb71448201f9c941922e9, type: 3}
+  m_PrefabInstance: {fileID: 7005959210988942073}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7101060179693395284 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 267438975312261037, guid: a199e750819fb71448201f9c941922e9, type: 3}
