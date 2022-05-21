@@ -10,18 +10,24 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] protected float mySpeed;
     [Header("攻撃力 : int")]
     [SerializeField] protected int power;
-
+    [Header("Debug用 : ターゲットにされているか")]
+    [SerializeField] protected bool battleFlg;
     // Start is called before the first frame update
     void Start()
     {
-        
+        battleFlg = false;
     }
 
-    protected void OnDamage(int num)
+    public void OnDamage(int num)
     {
         HP -= num;
     }
 
+    public void ChangeBattleFlg()
+    {
+        battleFlg = !battleFlg;
+    }
+    
     // Update is called once per frame
     void Update()
     {

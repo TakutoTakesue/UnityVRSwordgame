@@ -18,6 +18,8 @@ public class PlayerScript : MonoBehaviour
     float minPitch = -60.0f; //俯角制限
     [SerializeField]
     Camera MyCamera;
+    [SerializeField]
+    GameObject CameraPos;
 
     [SerializeField]
     GameObject LookPos;     //キャラの注視点
@@ -37,6 +39,10 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField]
     GameObject MenuPos;     //メニューを開くときの場所
+    [SerializeField]
+    GameObject RightHand;     //右手
+    [SerializeField]
+    GameObject LeftHand;     //左手
 
 
 
@@ -48,13 +54,26 @@ public class PlayerScript : MonoBehaviour
     Image KasouLifeGageImage;              //自身の仮想HP(ゲージ)
     int Life;               //自身のHP
     float KasouLife;               //自身の仮想HP
-    int KeepDamage;             //最後に受けたダメージ(連続の場合合算)
+    float KeepDamage;             //最後に受けたダメージ(連続の場合合算)
     float LifeDelay;               //HPの変動
     float HPlessDelay;              //HPゲージが減り始めるまでの時間管理
     bool deadflg;               //死んでいるかどうか
     public Text LifeTex;
     void Start()
     {
+
+        //消すやつ
+
+        RightHand.transform.position = new Vector3(0.3700722f, -0.5688783f, -0.1231707f);
+        RightHand.transform.rotation = new Quaternion(107.09f, 573.226f, 510.86f, 0);
+        LeftHand.transform.position = new Vector3(-0.3612857f, -0.5318148f, -0.1369106f);
+        LeftHand.transform.rotation = new Quaternion(-255.33f, -375.268f, -375.268f, 0);
+
+        //消すやつここまで
+
+
+
+
         Elapced = 0;
         Myanim = GetComponent<Animator>();
         MenuUI.SetActive(false);
@@ -63,22 +82,30 @@ public class PlayerScript : MonoBehaviour
         KasouLife = StartLife;
         Life = StartLife;
         LifeDelay = 0;
-
+        deadflg = false;
     }
 
     void Update()
     {
+        //消すやつ
+
+
 
 
         if (Input.GetKey(KeyCode.G))
         {
-            Life--;
-        
+            OnDamage(10);
+
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            OnDamage(-1000);
+
         }
 
 
 
-            if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (!StunFlg)
             {
@@ -107,7 +134,7 @@ public class PlayerScript : MonoBehaviour
             }
 
         }
-
+        //消すやつここまで
         InputMove.x = Input.GetAxis("Horizontal");
         InputMove.z = Input.GetAxis("Vertical");
 
@@ -119,6 +146,27 @@ public class PlayerScript : MonoBehaviour
             //顔をカメラの向きと連動させる
             Myanim.SetLookAtWeight(1.0f, 0.0f, 1.0f, 0.0f, 0.5f);
             Myanim.SetLookAtPosition(LookPos.transform.position);
+
+
+
+            //　右手のIKのウエイト設定
+            Myanim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
+            Myanim.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
+            //　左手のIKのウエイト設定
+            Myanim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1);
+            Myanim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1);
+            //　右手の位置設定
+            Myanim.SetIKPosition(AvatarIKGoal.RightHand, RightHand.transform.position);
+            Myanim.SetIKRotation(AvatarIKGoal.RightHand, RightHand.transform.rotation);
+            //　左手の位置設定
+            Myanim.SetIKPosition(AvatarIKGoal.LeftHand, LeftHand.transform.position);
+            Myanim.SetIKRotation(AvatarIKGoal.LeftHand, LeftHand.transform.rotation);
+
+
+
+
+
+
         }
 
     }
@@ -132,6 +180,7 @@ public class PlayerScript : MonoBehaviour
     }
     private void FixedUpdate()
     {
+       // UnityEngine.Debug.Log(LifeDelay + "+" + KasouLife + "+" + KeepDamage);
         if (Life != KasouLife)
         {
             LifeDelay -= Time.fixedDeltaTime;
@@ -147,8 +196,8 @@ public class PlayerScript : MonoBehaviour
         }
 
         LifeGageImage.fillAmount = (float)Life / StartLife;
-        UnityEngine.Debug.Log(Life / StartLife);
-        KasouLifeGageImage.fillAmount = KasouLife / StartLife;
+     //   UnityEngine.Debug.Log(Life / StartLife);
+        KasouLifeGageImage.fillAmount = (float)KasouLife / StartLife;
         LifeTex.text = "LIFE：" + Life.ToString("d3");
 
 
@@ -221,7 +270,7 @@ public class PlayerScript : MonoBehaviour
         if (Application.platform == RuntimePlatform.Android ||
         Application.platform == RuntimePlatform.IPhonePlayer)
         {
-            Vector3 campos = transform.position;
+            Vector3 campos =CameraPos.transform.position;
             //Inputストリームの中のgyro.attitudeは、生データのままでは座標系が異なる
             //Unity向けのQuaternionに変換し、実際に回転する
             Rot = GyroToUnity(Input.gyro.attitude).eulerAngles;
@@ -237,7 +286,7 @@ public class PlayerScript : MonoBehaviour
         }
         else
         {
-            Vector3 campos = transform.position;
+            Vector3 campos = CameraPos.transform.position;
             //ＰＣではマウスでエミュレートする
 
             if (StunFlg)
@@ -258,9 +307,7 @@ public class PlayerScript : MonoBehaviour
             }
             Vector3 axisDirV = Vector3.Scale(transform.forward, new Vector3(1, 0, 1)).normalized;
             axisDirV = axisDirV * ((ThirdParsonDistance > StunDistance) ? StunDistance : ThirdParsonDistance);
-            axisDirV.y = -1;
             campos -= axisDirV;
-            campos.y += 0.4f;
             MyCamera.transform.position = campos;
 
         }
@@ -274,8 +321,7 @@ public class PlayerScript : MonoBehaviour
     }
     public void OnDamage(int damage)
     {
-        if (!deadflg)
-        {
+
             if (LifeDelay < 0)
             {
                 KasouLife = Life;
@@ -286,13 +332,14 @@ public class PlayerScript : MonoBehaviour
                 KeepDamage += damage;
             }
             LifeDelay = 0.5f;
-            Life -= damage;
+        UnityEngine.Debug.Log(LifeDelay);
+        Life -= damage;
 
             if (Life < 0)
             {
                 Life = 0;
                 deadflg = true;
             }
-        }
+        
     }
 }

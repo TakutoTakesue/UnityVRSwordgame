@@ -417,6 +417,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1073012543}
     - target: {fileID: 5990382465474964638, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
+      propertyPath: CameraPos
+      value: 
+      objectReference: {fileID: 1705960971}
+    - target: {fileID: 5990382465474964638, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
       propertyPath: MenuCambas
       value: 
       objectReference: {fileID: 388284607}
@@ -588,5 +592,10 @@ GameObject:
 --- !u!1 &1262193598 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7861362105106125625, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
+  m_PrefabInstance: {fileID: 796477663}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1705960971 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1488620858968205921, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
   m_PrefabInstance: {fileID: 796477663}
   m_PrefabAsset: {fileID: 0}
