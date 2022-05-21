@@ -417,6 +417,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1073012543}
     - target: {fileID: 5990382465474964638, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
+      propertyPath: CameraPos
+      value: 
+      objectReference: {fileID: 1705960971}
+    - target: {fileID: 5990382465474964638, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
       propertyPath: MenuCambas
       value: 
       objectReference: {fileID: 388284607}
