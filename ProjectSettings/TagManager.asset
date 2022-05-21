@@ -7,6 +7,10 @@ TagManager:
   - FxTemporaire
   - Collide
   - Menu
+  - WeaponHave
+  - Weapon
+  - WeaponDamageRange
+  - PlayerCamera
   layers:
   - Default
   - TransparentFX

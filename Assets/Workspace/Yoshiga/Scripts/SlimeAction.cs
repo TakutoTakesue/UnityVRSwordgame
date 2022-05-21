@@ -12,7 +12,6 @@ public class SlimeAction : EnemyScript
         Idle,
         Walk,
         Attack,
-        Wince,
         Hit,
         Death,
     }
@@ -32,11 +31,6 @@ public class SlimeAction : EnemyScript
     [Header("攻撃のインターバル : s")]
     [SerializeField] private float AttackIntervalTime;
     private float attackInterval;
-    private Vector3 attackStartPos;  // 攻撃を始めた場所
-    private Vector3 attackFinishPos; // 攻撃する時に向かう場所
-    private float attackDistance; // 攻撃した時の敵とプレイヤーの距離
-    private bool attackDirFlg = false;
-    private float attackElapsed; // 攻撃の経過時間
 
     // Start is called before the first frame update
     void Start()
@@ -61,23 +55,6 @@ public class SlimeAction : EnemyScript
                     {
                         attackInterval -= Time.deltaTime;
                     }
-
-                    // プレイヤーとの距離が離れているとプレイヤーに向かっていく処理
-                    if (attackRange + 2.0f <= Vector3.Distance(transform.position, player.transform.position))
-                    {
-                        myState = State.Walk;
-                        myAnim.SetBool("Move", true);
-                    }
-
-                    if(attackInterval <= 0)
-                    {
-                        myState = State.Attack;
-                        myRB.useGravity = false;
-                        attackStartPos = transform.position;
-                        attackFinishPos = player.transform.position + new Vector3(0, 1, 0);
-                        attackDistance = Vector3.Distance(attackFinishPos, transform.position);
-                    }
-
                 }
                 else
                 {
@@ -92,8 +69,8 @@ public class SlimeAction : EnemyScript
                 }               
                 break;
             case State.Walk:
-                #region 移動
-                if (isTarget)
+
+                if(isTarget)
                 {
                     if(attackRange >= Vector3.Distance(transform.position, player.transform.position))
                     {
@@ -109,34 +86,7 @@ public class SlimeAction : EnemyScript
                         myAnim.SetBool("Move", false);
                         myState = State.Idle;
                     }
-                }
-                #endregion
-                break;
-            case State.Attack:
-
-                attackElapsed += Time.deltaTime;
-                
-                if (!attackDirFlg)
-                {               
-                    transform.position = Vector3.Lerp(attackStartPos, attackFinishPos, attackElapsed);
-                    if(transform.position == attackFinishPos)
-                    {
-                        attackDirFlg = true;
-                        attackElapsed = 0.0f;
-                    }
-                }
-                else
-                {
-                    transform.position = Vector3.Lerp(attackFinishPos, attackStartPos, attackElapsed);
-                    if (transform.position == attackStartPos)
-                    {
-                        attackDirFlg = false;
-                        myState = State.Idle;
-                        myRB.useGravity = true;
-                        attackElapsed = 0.0f;
-                        attackInterval = AttackIntervalTime;
-                    }
-                }
+                }            
                 break;
         }
 
@@ -150,11 +100,8 @@ public class SlimeAction : EnemyScript
 
         if (isTarget)
         {
-            if(myState == State.Idle || myState == State.Walk)
-            {
-                // プレイヤーの方に向く
-                gameObject.transform.LookAt(player.transform.position);
-            }         
+            // プレイヤーの方に向く
+            gameObject.transform.LookAt(player.transform.position);
         }
     }
 
@@ -169,16 +116,6 @@ public class SlimeAction : EnemyScript
             gameObject.transform.LookAt(destination);
             idleInterval = idleIntervalTime;
         }    
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(myState == State.Attack && collision.gameObject.tag == "Player")
-        {
-            attackDirFlg = true;
-            attackElapsed = 0.0f;
-            attackFinishPos = transform.position;
-        }
     }
 
     // 目的地をランダムで返す処理

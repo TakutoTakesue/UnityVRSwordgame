@@ -8,7 +8,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] protected int HP;
     [Header("“G‚ÌˆÚ“®‘¬“x : float")]
     [SerializeField] protected float mySpeed;
-    [Header("“G‚ÌUŒ‚—Í : int")]
+    [Header("UŒ‚—Í : int")]
     [SerializeField] protected int power;
     [Header("ƒ^[ƒQƒbƒg‚É‚³‚ê‚Ä‚¢‚é‚©")]
     [SerializeField] protected bool battleFlg;

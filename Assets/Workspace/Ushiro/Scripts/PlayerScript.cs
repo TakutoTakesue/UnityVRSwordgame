@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using Math = System.Math;
 
@@ -17,6 +18,8 @@ public class PlayerScript : MonoBehaviour
     float minPitch = -60.0f; //俯角制限
     [SerializeField]
     Camera MyCamera;
+    [SerializeField]
+    GameObject CameraPos;
 
     [SerializeField]
     GameObject LookPos;     //キャラの注視点
@@ -37,15 +40,51 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     GameObject MenuPos;     //メニューを開くときの場所
 
+
+
+    [SerializeField]
+    int StartLife;               //自身のHPの初期値
+    [SerializeField]
+    Image LifeGageImage;               //自身のHP(ゲージ)
+    [SerializeField]
+    Image KasouLifeGageImage;              //自身の仮想HP(ゲージ)
+    int Life;               //自身のHP
+    float KasouLife;               //自身の仮想HP
+    float KeepDamage;             //最後に受けたダメージ(連続の場合合算)
+    float LifeDelay;               //HPの変動
+    float HPlessDelay;              //HPゲージが減り始めるまでの時間管理
+    bool deadflg;               //死んでいるかどうか
+    public Text LifeTex;
     void Start()
     {
         Elapced = 0;
         Myanim = GetComponent<Animator>();
         MenuUI.SetActive(false);
+
+
+        KasouLife = StartLife;
+        Life = StartLife;
+        LifeDelay = 0;
+        deadflg = false;
     }
 
     void Update()
     {
+
+
+        if (Input.GetKey(KeyCode.G))
+        {
+            OnDamage(10);
+
+        }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            OnDamage(-1000);
+
+        }
+
+
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (!StunFlg)
@@ -99,8 +138,28 @@ public class PlayerScript : MonoBehaviour
         return new Quaternion(-q.x, -q.z, -q.y, q.w) * Quaternion.Euler(90f, 0f, 0f);
     }
     private void FixedUpdate()
-
     {
+       // UnityEngine.Debug.Log(LifeDelay + "+" + KasouLife + "+" + KeepDamage);
+        if (Life != KasouLife)
+        {
+            LifeDelay -= Time.fixedDeltaTime;
+            if (LifeDelay < 0)
+            {
+                KasouLife -= KeepDamage * Time.fixedDeltaTime * 3;
+                if (KasouLife < Life)
+                {
+
+                    KasouLife = Life;
+                }
+            }
+        }
+
+        LifeGageImage.fillAmount = (float)Life / StartLife;
+     //   UnityEngine.Debug.Log(Life / StartLife);
+        KasouLifeGageImage.fillAmount = (float)KasouLife / StartLife;
+        LifeTex.text = "LIFE：" + Life.ToString("d3");
+
+
         if (StunFlg)
         {
 
@@ -170,7 +229,7 @@ public class PlayerScript : MonoBehaviour
         if (Application.platform == RuntimePlatform.Android ||
         Application.platform == RuntimePlatform.IPhonePlayer)
         {
-            Vector3 campos = transform.position;
+            Vector3 campos =CameraPos.transform.position;
             //Inputストリームの中のgyro.attitudeは、生データのままでは座標系が異なる
             //Unity向けのQuaternionに変換し、実際に回転する
             Rot = GyroToUnity(Input.gyro.attitude).eulerAngles;
@@ -186,7 +245,7 @@ public class PlayerScript : MonoBehaviour
         }
         else
         {
-            Vector3 campos = transform.position;
+            Vector3 campos = CameraPos.transform.position;
             //ＰＣではマウスでエミュレートする
 
             if (StunFlg)
@@ -207,9 +266,7 @@ public class PlayerScript : MonoBehaviour
             }
             Vector3 axisDirV = Vector3.Scale(transform.forward, new Vector3(1, 0, 1)).normalized;
             axisDirV = axisDirV * ((ThirdParsonDistance > StunDistance) ? StunDistance : ThirdParsonDistance);
-            axisDirV.y = -1;
             campos -= axisDirV;
-            campos.y += 0.4f;
             MyCamera.transform.position = campos;
 
         }
@@ -224,5 +281,24 @@ public class PlayerScript : MonoBehaviour
     public void OnDamage(int damage)
     {
 
+            if (LifeDelay < 0)
+            {
+                KasouLife = Life;
+                KeepDamage = damage;
+            }
+            else
+            {
+                KeepDamage += damage;
+            }
+            LifeDelay = 0.5f;
+        UnityEngine.Debug.Log(LifeDelay);
+        Life -= damage;
+
+            if (Life < 0)
+            {
+                Life = 0;
+                deadflg = true;
+            }
+        
     }
 }

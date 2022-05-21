@@ -7,8 +7,11 @@ public class ColliderAction : MonoBehaviour
 
     [SerializeField,Header("プレイヤーコントローラー")] 
     GameObject controller;
+    [SerializeField, Header("プレイヤーのカメラ")]
+    GameObject playercamera;
     [SerializeField, Header("プレイヤーの持っている手 true 右 : false 左")]
     bool haveHand = true;
+ 
     bool weaponHaveFlg = false; // 物をつかんでいるかどうか
     
     // Start is called before the first frame update
@@ -77,7 +80,7 @@ public class ColliderAction : MonoBehaviour
             if (OVRInput.Get(OVRInput.RawButton.RIndexTrigger) ||
             Input.GetKey(KeyCode.Space))
             {
-                script.GetWeapon(controller.transform, haveHand);
+                script.GetWeapon(controller.transform, haveHand, playercamera);
                 //アイテムに掴んでいる指示trueを出し続ける
                 script.Grabed(true);
                 weaponHaveFlg = true;

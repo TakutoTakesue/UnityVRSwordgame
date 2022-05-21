@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponAction : MonoBehaviour
+public class WeaponAction : WeaponBase
 {
-
+  
 
     // Start is called before the first frame update
     void Start()

@@ -14,7 +14,6 @@ public class WeaponHaveAction : MonoBehaviour
     [SerializeField, Header("逆手もちが出きる武器かどうか")]
     bool reverseMove = false;
     #endregion
-
     #region プライベート変数宣言
     Renderer myRenderer; //自身のレンダラー
     Rigidbody myRigidbody; //自身の物理挙動
@@ -53,11 +52,12 @@ public class WeaponHaveAction : MonoBehaviour
     {
         myRenderer.material.color = ColorName;
     }
+
     /*
      *  手が掴む処理
      * @param Mode（true : 掴む/false : 放す）
      */
-    public void Grabed(bool Mode )
+    public void Grabed(bool Mode)
     {
         myRigidbody.isKinematic = Mode; //物理挙動の可否
         myRigidbody.useGravity = !Mode; //重力利用の可否
@@ -73,13 +73,20 @@ public class WeaponHaveAction : MonoBehaviour
      *  @param transform コントローラーtransform
      *  @param handR (true : 右手/false : 左手)
      */
-    public void GetWeapon(Transform transform, bool handR) {
+    public void GetWeapon(Transform transform, bool handR, GameObject playerCamera) {
         var a = transform.forward; // コントローラーの向いている方向
         var b = Weapon.transform.forward; // 持ちてのベクトル
         var signedAngle = Vector3.SignedAngle(a, b, Vector3.up);    // 二つのベクトルのなす角
         Vector3 rotation = handR ?  Vector3.zero : new Vector3(0, 180, 0);   // 右手で持っているなら何もしない左手なら180度回転
         Vector3 updatePosition = handR ? correctionPosition : -correctionPosition;
+        // ウェポンの親をプレイヤーに変更
         Weapon.transform.parent = transform;
+        // ウェポンにプレイヤーのカメラとプレイヤー本体の情報を送る
+        var weaponScript = Weapon.GetComponent<WeaponBase>();
+        if (weaponScript) {
+            weaponScript.Take(null, playerCamera);
+        }
+
         // 逆手もちかどうかの処理
         // 角度がreverseMoveAngle以上の時は逆手もち
         if (Mathf.Abs(signedAngle) <= reverseMoveAngle || !reverseMove)
