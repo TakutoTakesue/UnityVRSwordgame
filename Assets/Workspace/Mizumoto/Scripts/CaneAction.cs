@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CaneAction : MagicBase
+public class CaneAction : WeaponBase
 {
     #region シリアライズ変数
     [SerializeField, Header("ロックオンのピン")]
@@ -11,6 +11,7 @@ public class CaneAction : MagicBase
     #region プライベート変数
     Transform yeyPos = null; // 目の位置
     IEnumerator weaponPick;    // コール―チン変数
+    Magic magic;
     #endregion
 
 
