@@ -266,10 +266,10 @@ public class PlayerScript : MonoBehaviour
                 //ˆÚ“®•ûŒü‚ğZo
                 Speed = axisDirV * Speed.z + axisDirH * Speed.x;
                 dir = Speed * WalkSpeed;
-                MyRig.velocity= dir;
             }
 
 
+            MyRig.velocity = dir;
 
         }
         if (Application.platform == RuntimePlatform.Android ||
