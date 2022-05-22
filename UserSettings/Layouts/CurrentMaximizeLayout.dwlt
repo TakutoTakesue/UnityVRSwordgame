@@ -26,7 +26,11 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 200}
   m_MaxSize: {x: 32384, y: 16192}
   vertical: 0
+<<<<<<< Updated upstream
   controlID: 20877
+=======
+  controlID: 72087
+>>>>>>> Stashed changes
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -143,7 +147,11 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
+<<<<<<< Updated upstream
   controlID: 20824
+=======
+  controlID: 72088
+>>>>>>> Stashed changes
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -161,17 +169,24 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< Updated upstream
     width: 704
     height: 370.4
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
+=======
+    width: 713.6
+    height: 363.2
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+>>>>>>> Stashed changes
   m_ActualView: {fileID: 5}
   m_Panes:
   - {fileID: 5}
   - {fileID: 6}
   - {fileID: 7}
   m_Selected: 0
-  m_LastSelected: 1
+  m_LastSelected: 2
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -397,9 +412,15 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
+<<<<<<< Updated upstream
     m_Target: {x: 378.6953, y: -126.69881, z: 1009.00684}
     speed: 2
     m_Value: {x: 378.6953, y: -126.69881, z: 1009.00684}
+=======
+    m_Target: {x: 72.002815, y: 2.2491007, z: 14.816349}
+    speed: 2
+    m_Value: {x: 72.002815, y: 2.2491007, z: 14.816349}
+>>>>>>> Stashed changes
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -446,6 +467,7 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
+<<<<<<< Updated upstream
     m_Target: {x: 0.08282818, y: 0.22589022, z: -0.019613544, w: 0.97054744}
     speed: 2
     m_Value: {x: 0.08281849, y: 0.2258638, z: -0.01961125, w: 0.97043395}
@@ -453,13 +475,27 @@ MonoBehaviour:
     m_Target: 392.77792
     speed: 2
     m_Value: 392.77792
+=======
+    m_Target: {x: 0.32822478, y: -0.44165185, z: 0.17779128, w: 0.81595105}
+    speed: 2
+    m_Value: {x: 0.32819626, y: -0.44161347, z: 0.17777583, w: 0.8158801}
+  m_Size:
+    m_Target: 0.0995
+    speed: 2
+    m_Value: 0.0995
+>>>>>>> Stashed changes
   m_Ortho:
     m_Target: 0
     speed: 2
     m_Value: 0
   m_CameraSettings:
+<<<<<<< Updated upstream
     m_Speed: 1
     m_SpeedNormalized: 0.5
+=======
+    m_Speed: 0.8458
+    m_SpeedNormalized: 0.42
+>>>>>>> Stashed changes
     m_SpeedMin: 0.01
     m_SpeedMax: 2
     m_EasingEnabled: 1
@@ -654,21 +690,25 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
+<<<<<<< Updated upstream
       m_ExpandedIDs: 56a7ffff74c2ffff78c2ffffa6ddffffd6e1ffff36fbffff
+=======
+      m_ExpandedIDs: 6afbfcffa4fcfcff7020feff1e39feff8440feffc0f4fffff2f4ffff1ef5ffff4ef5ffff7ef5ffffb2f5ffffe6f5ffffecf5fffff0f5ffff20f6ffff4cf6ffff7cf6ffffacf6ffffe0f6ffff14f7ffff1af7ffff1ef7ffff3af7ffff44f7ffff44f9ffff56f9ffff5af9ffffdef9ffffe2f9ffffe6f9ffff0afaffff0efaffff36fbffff
+>>>>>>> Stashed changes
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: Fire_Complex_Magic_FireBall
+        m_OriginalName: Fire_Complex_Magic_FireBall
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: -217000
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 9}
       m_SearchString: 
@@ -745,7 +785,11 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
+<<<<<<< Updated upstream
     - Assets/Workspace/Takesue/Terrains
+=======
+    - Assets/Workspace/Yoshiga/myAssets/Flames Of The Phoenix/Fire/Complex/Magic
+>>>>>>> Stashed changes
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 0
@@ -757,10 +801,17 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
+<<<<<<< Updated upstream
     scrollPos: {x: 0, y: 60}
     m_SelectedIDs: 72780000
     m_LastClickedID: 30834
     m_ExpandedIDs: ffffffff00000000987200009c7200009e720000a0720000a2720000a4720000a6720000a8720000aa720000ac720000ae720000b0720000b2720000b4720000b6720000b8720000ba720000bc720000be720000c0720000c2720000c472000050730000b0760000cc760000c29300007cae00007eae0000decf0000721d0100921d0100
+=======
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 187d0000
+    m_LastClickedID: 32024
+    m_ExpandedIDs: ffffffff00000000d0730000d2730000d4730000d6730000d8730000da730000dc730000de730000e0730000e2730000e4730000e6730000e8730000ea730000ec730000ee730000f0730000f2730000f4730000f6730000f8730000fa730000fe73000000740000027400000474000006740000087400000a7400000c7400000e7400001074000012740000147400001a7400001c740000ce9c0000da9c0000ec9c0000f69c0000fa9c0000fe9c0000189d00001e9d00002a9d0000389d0000509d0000569d00005c9e00008ea60000a0a60000a4a60000a8a60000b0a60000b8a60000c4a60000d2a60000dca60000e0a60000e4a60000e8a60000fca6000008a700000ca7000010a7000018a700001ca7000034a700001ca8000022cf00007adf0000
+>>>>>>> Stashed changes
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -786,6 +837,7 @@ MonoBehaviour:
       m_ResourceFile: 
   m_AssetTreeState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< Updated upstream
     m_SelectedIDs: faa30000
     m_LastClickedID: 0
     m_ExpandedIDs: ffffffff00000000987200009c7200009e720000a0720000a2720000a4720000a6720000a8720000aa720000ac720000ae720000b0720000b2720000b4720000b6720000b8720000ba720000bc720000be720000c0720000c2720000c472000050730000b0760000cc760000c29300007cae00007eae0000decf0000721d0100921d0100
@@ -793,13 +845,26 @@ MonoBehaviour:
       m_UserAcceptedRename: 0
       m_Name: 
       m_OriginalName: 
+=======
+    m_SelectedIDs: 58b0fcff
+    m_LastClickedID: 0
+    m_ExpandedIDs: a478fdffffffffff00000000d0730000d2730000d4730000d6730000d8730000da730000dc730000e0730000e2730000e4730000e6730000e8730000ea730000ec730000ee730000f0730000f2730000f4730000f6730000f8730000fa730000fe73000000740000027400000474000006740000087400000a7400000c7400000e7400001074000012740000147400001a7400001c74000022750000ce9c0000ec9c0000189d00001e9d0000229d00002a9d0000389d0000509d0000569d00005c9e0000a0a60000a4a60000a8a60000b0a60000b8a60000c4a60000d2a60000dca60000e0a60000e4a60000e8a60000fca6000008a700000ca7000010a7000018a700001ca7000034a700001ca8000022cf0000bc4a0200c04a0200206502004a65020080740200b0740200d2740200fca4020000a502000aa5020016a50200
+    m_RenameOverlay:
+      m_UserAcceptedRename: 0
+      m_Name: Fire_Complex_Magic_FireBall
+      m_OriginalName: Fire_Complex_Magic_FireBall
+>>>>>>> Stashed changes
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
+<<<<<<< Updated upstream
       m_UserData: 0
+=======
+      m_UserData: 166498
+>>>>>>> Stashed changes
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 11
@@ -813,8 +878,13 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
+<<<<<<< Updated upstream
     m_SelectedInstanceIDs: faa30000
     m_LastClickedInstanceID: 41978
+=======
+    m_SelectedInstanceIDs: 58b0fcff
+    m_LastClickedInstanceID: -217000
+>>>>>>> Stashed changes
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: 
     m_RenameOverlay:
@@ -904,7 +974,11 @@ MonoBehaviour:
     m_CachedPref: -160
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
+<<<<<<< Updated upstream
   m_LastInspectedObjectInstanceID: 41978
+=======
+  m_LastInspectedObjectInstanceID: -217000
+>>>>>>> Stashed changes
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0

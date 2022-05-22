@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &632287630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 632287631}
+  m_Layer: 0
+  m_Name: MagicPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &632287631
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 632287630}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.541, y: 1.896, z: 2.061}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6409245332784763049}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6410885393476084909
 GameObject:
   m_ObjectHideFlags: 0
@@ -1268,6 +1299,7 @@ Transform:
   - {fileID: 6409345134695991229}
   - {fileID: 6407913532716301407}
   - {fileID: 1749877735}
+  - {fileID: 632287631}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1339,8 +1371,11 @@ MonoBehaviour:
   battleFlg: 0
   range: 7
   entryEffect: {fileID: 100000, guid: 94c01e7752588b342817c68b1bf2360c, type: 3}
-  AttackIntervalTime: 10
+  chargeEffect: {fileID: 1749721031}
+  AttackIntervalTime: 4
   ChargeIntervalTime: 4
+  fireBall: {fileID: 121640, guid: b0f1d3784f3498e44b51a5653fbcfafb, type: 3}
+  fireBallSpeed: 2
 --- !u!1 &6411303573798584735
 GameObject:
   m_ObjectHideFlags: 0
@@ -2633,6 +2668,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wizard_Charge
       objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: 123af3445d9925b4294ae1d15f6d91ca, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: 123af3445d9925b4294ae1d15f6d91ca, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -2679,6 +2718,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 123af3445d9925b4294ae1d15f6d91ca, type: 3}
+--- !u!1 &1749721031 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100008, guid: 123af3445d9925b4294ae1d15f6d91ca, type: 3}
+  m_PrefabInstance: {fileID: 1749752175}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1749877735 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400008, guid: 123af3445d9925b4294ae1d15f6d91ca, type: 3}

@@ -32,7 +32,12 @@ public class WizardAction : EnemyScript
     [SerializeField] private float ChargeIntervalTime;
     [Header("炎魔法 : Object")]
     [SerializeField] private GameObject fireBall;
-    public GameObject fireMagic;
+    [Header("魔法の速度 : m/s")]
+    [SerializeField] private float fireBallSpeed;
+    private GameObject fireMagic;
+    private ParticleSystem fireMagicPS;
+    private GameObject magicPos; // 魔法の出る位置
+    private float fireBallSize; // 炎魔法の大きさ
     private float chargeInterval;
     private bool isTarget;  // プレイヤーを見つけているかのフラグ
     private GameObject targetPlayer; // 狙っている敵(ターゲット)
@@ -48,6 +53,8 @@ public class WizardAction : EnemyScript
         attackInterval = AttackIntervalTime;
         chargeInterval = ChargeIntervalTime;
         battleFlg = true;
+        fireBallSize = 0.1f;
+        magicPos = transform.Find("MagicPos").gameObject;
     }
 
     private void FixedUpdate()
@@ -66,7 +73,8 @@ public class WizardAction : EnemyScript
                             chargeEffect.SetActive(true);
                             myState = State.Attack;
                             myAnim.SetBool("Charge", true);
-                            fireMagic = Instantiate(fireBall, chargeEffect.transform.position + new Vector3(0, 0, 0.4f), chargeEffect.transform.rotation);
+                            fireMagic = Instantiate(fireBall, magicPos.transform.position, chargeEffect.transform.rotation);
+                            fireMagicPS = fireMagic.GetComponentInChildren<ParticleSystem>();
                         }
                     }
                 }
@@ -77,12 +85,18 @@ public class WizardAction : EnemyScript
                 if(chargeInterval > 0)
                 {
                     chargeInterval -= Time.deltaTime;
-                    if(chargeInterval <= 0)
+                    fireBallSize += Time.deltaTime / (ChargeIntervalTime * 2);
+                    fireMagicPS.startSize = fireBallSize * 1.5f;
+                    fireMagic.transform.position = magicPos.transform.position;
+
+                    if (chargeInterval <= 0)
                     {
                         myState = State.Idle;
                         chargeEffect.SetActive(false);
                         myAnim.SetBool("Charge", false);
                         chargeInterval = ChargeIntervalTime;
+                        fireMagic.GetComponent<Rigidbody>().velocity = (player.transform.position - fireMagic.transform.position).normalized * fireBallSpeed;
+                        fireBallSize = 0.1f;
                     }
                 }
                 break;
