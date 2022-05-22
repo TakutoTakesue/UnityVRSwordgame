@@ -30,6 +30,9 @@ public class WizardAction : EnemyScript
     private float attackInterval;
     [Header("詠唱の時間 : s")]
     [SerializeField] private float ChargeIntervalTime;
+    [Header("炎魔法 : Object")]
+    [SerializeField] private GameObject fireBall;
+    public GameObject fireMagic;
     private float chargeInterval;
     private bool isTarget;  // プレイヤーを見つけているかのフラグ
     private GameObject targetPlayer; // 狙っている敵(ターゲット)
@@ -62,6 +65,8 @@ public class WizardAction : EnemyScript
                             attackInterval = AttackIntervalTime;
                             chargeEffect.SetActive(true);
                             myState = State.Attack;
+                            myAnim.SetBool("Charge", true);
+                            fireMagic = Instantiate(fireBall, chargeEffect.transform.position + new Vector3(0, 0, 0.4f), chargeEffect.transform.rotation);
                         }
                     }
                 }
@@ -74,7 +79,10 @@ public class WizardAction : EnemyScript
                     chargeInterval -= Time.deltaTime;
                     if(chargeInterval <= 0)
                     {
-
+                        myState = State.Idle;
+                        chargeEffect.SetActive(false);
+                        myAnim.SetBool("Charge", false);
+                        chargeInterval = ChargeIntervalTime;
                     }
                 }
                 break;
@@ -90,7 +98,7 @@ public class WizardAction : EnemyScript
 
         if (isTarget)
         {
-            if (myState == State.Idle && myState == State.Attack)
+            if (myState == State.Idle || myState == State.Attack)
             {
                 // プレイヤーの方に向く
                 gameObject.transform.LookAt(new Vector3(player.transform.position.x,transform.position.y,player.transform.position.z));

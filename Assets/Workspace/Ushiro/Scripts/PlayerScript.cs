@@ -59,6 +59,10 @@ public class PlayerScript : MonoBehaviour
     float HPlessDelay;              //HPゲージが減り始めるまでの時間管理
     bool deadflg;               //死んでいるかどうか
     public Text LifeTex;
+
+    Rigidbody MyRig;            //自分のRigitBody
+
+
     void Start()
     {
 
@@ -83,6 +87,7 @@ public class PlayerScript : MonoBehaviour
         Life = StartLife;
         LifeDelay = 0;
         deadflg = false;
+        MyRig = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -261,10 +266,10 @@ public class PlayerScript : MonoBehaviour
                 //移動方向を算出
                 Speed = axisDirV * Speed.z + axisDirH * Speed.x;
                 dir = Speed * WalkSpeed;
-                transform.position += dir * Time.fixedDeltaTime;
             }
 
 
+            MyRig.velocity = dir;
 
         }
         if (Application.platform == RuntimePlatform.Android ||

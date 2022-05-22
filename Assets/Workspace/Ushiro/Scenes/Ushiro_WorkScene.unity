@@ -296,6 +296,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 584245430072383, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 584245430072383, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
+      propertyPath: m_Constraints
+      value: 36
+      objectReference: {fileID: 0}
     - target: {fileID: 303311968253874358, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -384,18 +392,6 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3570579058013539371, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
-      propertyPath: m_RenderMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3570579058013539371, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
-      propertyPath: m_PixelPerfect
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3570579058013539371, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
-      propertyPath: m_PlaneDistance
-      value: 0.3
-      objectReference: {fileID: 0}
     - target: {fileID: 4518445435579701582, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -442,7 +438,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7500612692919211930, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.131
       objectReference: {fileID: 0}
     - target: {fileID: 7500612692919211930, guid: 70c2e20ca9ee31c40b167a96e3f5510b, type: 3}
       propertyPath: m_LocalPosition.z
