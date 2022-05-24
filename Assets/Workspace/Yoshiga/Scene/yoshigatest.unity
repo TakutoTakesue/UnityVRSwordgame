@@ -282,6 +282,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wizard_Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 6411299284858423985, guid: 48a245a92fdcb9f4080fb6c130a9cd12, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 48a245a92fdcb9f4080fb6c130a9cd12, type: 3}
 --- !u!1001 &1102491377
