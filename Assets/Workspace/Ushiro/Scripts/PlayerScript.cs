@@ -62,17 +62,21 @@ public class PlayerScript : MonoBehaviour
 
     Rigidbody MyRig;            //é©ï™ÇÃRigitBody
 
-
+    [SerializeField]
+    bool UnityEditorFlg = true;
     void Start()
     {
 
+
+
         //è¡Ç∑Ç‚Ç¬
-
-        RightHand.transform.position = new Vector3(0.3700722f, -0.5688783f, -0.1231707f);
-        RightHand.transform.rotation = new Quaternion(107.09f, 573.226f, 510.86f, 0);
-        LeftHand.transform.position = new Vector3(-0.3612857f, -0.5318148f, -0.1369106f);
-        LeftHand.transform.rotation = new Quaternion(-255.33f, -375.268f, -375.268f, 0);
-
+        if (UnityEditorFlg)
+        {
+            RightHand.transform.position = new Vector3(0.3700722f, -0.5688783f, -0.1231707f);
+            RightHand.transform.rotation = new Quaternion(107.09f, 573.226f, 510.86f, 0);
+            LeftHand.transform.position = new Vector3(-0.3612857f, -0.5318148f, -0.1369106f);
+            LeftHand.transform.rotation = new Quaternion(-255.33f, -375.268f, -375.268f, 0);
+        }
         //è¡Ç∑Ç‚Ç¬Ç±Ç±Ç‹Ç≈
 
 
@@ -82,7 +86,7 @@ public class PlayerScript : MonoBehaviour
         Myanim = GetComponent<Animator>();
         MenuUI.SetActive(false);
 
-
+        HPlessDelay = 0.5f;
         KasouLife = StartLife;
         Life = StartLife;
         LifeDelay = 0;
@@ -327,24 +331,24 @@ public class PlayerScript : MonoBehaviour
     public void OnDamage(int damage)
     {
 
-            if (LifeDelay < 0)
-            {
-                KasouLife = Life;
-                KeepDamage = damage;
-            }
-            else
-            {
-                KeepDamage += damage;
-            }
-            LifeDelay = 0.5f;
+        if (LifeDelay < 0)
+        {
+            KasouLife = Life;
+            KeepDamage = damage;
+        }
+        else
+        {
+            KeepDamage += damage;
+        }
+        LifeDelay = HPlessDelay;
         UnityEngine.Debug.Log(LifeDelay);
         Life -= damage;
 
-            if (Life < 0)
-            {
-                Life = 0;
-                deadflg = true;
-            }
-        
+        if (Life < 0)
+        {
+            Life = 0;
+            deadflg = true;
+        }
+
     }
 }
