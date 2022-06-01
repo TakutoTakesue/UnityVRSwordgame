@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class WizardAction : EnemyScript
 {
-    private GameObject player;
+    private SphereCollider myRange;
     private Rigidbody myRB;
     private Animator myAnim;
     public enum State
@@ -19,8 +20,10 @@ public class WizardAction : EnemyScript
     }
 
     private State myState = State.Entry;    // 敵のステータス
+    [Header("視野角 : (0～180)度")]
+    [SerializeField] private float searchAngle;
     [Header("感知範囲 : m")]
-    [SerializeField] private float range;
+    [SerializeField] private float serchRange;
     [Header("登場時のエフェクト : Object")]
     [SerializeField] private GameObject entryEffect;
     [Header("詠唱エフェクト : Object")]
@@ -40,12 +43,11 @@ public class WizardAction : EnemyScript
     private float fireBallSize; // 炎魔法の大きさ
     private float chargeInterval;
     private bool isTarget;  // プレイヤーを見つけているかのフラグ
-    private GameObject targetPlayer; // 狙っている敵(ターゲット)
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        base.Start();
         myRB = GetComponent<Rigidbody>();
         myAnim = GetComponent<Animator>();
         Instantiate(entryEffect, transform.position + new Vector3(0, 0, 0), transform.rotation);
@@ -55,6 +57,8 @@ public class WizardAction : EnemyScript
         battleFlg = true;
         fireBallSize = 0.1f;
         magicPos = transform.Find("MagicPos").gameObject;
+        myRange = GetComponent<SphereCollider>();
+        myRange.radius = serchRange;
     }
 
     private void FixedUpdate()
@@ -95,19 +99,11 @@ public class WizardAction : EnemyScript
                         chargeEffect.SetActive(false);
                         myAnim.SetBool("Charge", false);
                         chargeInterval = ChargeIntervalTime;
-                        fireMagic.GetComponent<Rigidbody>().velocity = (player.transform.position - fireMagic.transform.position).normalized * fireBallSpeed;
+                        fireMagic.GetComponent<Rigidbody>().velocity = (targetPlayer.transform.position - fireMagic.transform.position).normalized * fireBallSpeed;
                         fireBallSize = 0.1f;
                     }
                 }
                 break;
-        }
-
-        // プレイヤーを発見
-        if (!isTarget && range >= Vector3.Distance(transform.position, player.transform.position))
-        {
-            isTarget = true;
-            myAnim.SetBool("Discover", true);
-            myState = State.Idle;
         }
 
         if (isTarget)
@@ -115,7 +111,26 @@ public class WizardAction : EnemyScript
             if (myState == State.Idle || myState == State.Attack)
             {
                 // プレイヤーの方に向く
-                gameObject.transform.LookAt(new Vector3(player.transform.position.x,transform.position.y,player.transform.position.z));
+                gameObject.transform.LookAt(new Vector3(targetPlayer.transform.position.x,transform.position.y, targetPlayer.transform.position.z));
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player" && targetPlayer == null)
+        {
+            //　プレイヤーの方向
+            Vector3 playerDirection = other.transform.position - transform.position;
+            //　敵の前方からのプレイヤーの方向
+            float angle = Vector3.Angle(transform.forward, playerDirection);
+            //　サーチする角度内だったらプレイヤー発見
+            if (angle <= searchAngle)
+            {
+                targetPlayer = other.gameObject;
+                isTarget = true;
+                myAnim.SetBool("Discover", true);
+                myState = State.Idle;
             }
         }
     }
@@ -130,4 +145,25 @@ public class WizardAction : EnemyScript
     {
         
     }
+
+#if UNITY_EDITOR
+    //　サーチする角度表示
+    private void OnDrawGizmos()
+    {
+        Handles.color = Color.red;
+        if (myRange == null)
+        {
+            Handles.DrawSolidArc(new Vector3(transform.position.x, 0, transform.position.z), 
+                                     Vector3.up, Quaternion.Euler(0f, -searchAngle, 0f) * transform.forward, 
+                                     searchAngle * 2f, 0);
+        }
+        else
+        {
+            Handles.DrawSolidArc(new Vector3(transform.position.x, 0, transform.position.z), 
+                                     Vector3.up, Quaternion.Euler(0f, -searchAngle, 0f) * transform.forward, 
+                                     searchAngle * 2f, myRange.radius);
+        }
+        
+    }
+#endif
 }

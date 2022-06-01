@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class SlimeAction : EnemyScript
 {
-    private GameObject player;
+    private SphereCollider myRange;
     private Rigidbody myRB;
     private Animator myAnim;
     public enum State
@@ -18,8 +19,10 @@ public class SlimeAction : EnemyScript
     }
 
     private State myState = State.Idle;    // 敵のステータス
+    [Header("視野角 : (0～180)度")]
+    [SerializeField] private float searchAngle;
     [Header("感知範囲 : m")]
-    [SerializeField] private float range;
+    [SerializeField] private float serchRange;
     [Header("移動範囲の半径 : m")]
     [SerializeField] private float moveRadius;
     [Header("Idle状態でその場にとどまる時間 : s")]
@@ -41,12 +44,14 @@ public class SlimeAction : EnemyScript
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        base.Start();
         myRB = GetComponent<Rigidbody>();
         myAnim = GetComponent<Animator>();
         isTarget = false;
         idleInterval = idleIntervalTime;
         attackInterval = AttackIntervalTime;
+        myRange = GetComponent<SphereCollider>();
+        myRange.radius = serchRange;
     }
 
     private void FixedUpdate()
@@ -63,7 +68,7 @@ public class SlimeAction : EnemyScript
                     }
 
                     // 少し離れたら追いかける処理
-                    if (attackRange + 2.0f < Vector3.Distance(transform.position, player.transform.position))
+                    if (attackRange + 2.0f < Vector3.Distance(transform.position, targetPlayer.transform.position))
                     {
                         myState = State.Walk;
                         myAnim.SetBool("Move", true);
@@ -75,7 +80,7 @@ public class SlimeAction : EnemyScript
                         myState = State.Attack;
                         myRB.useGravity = false;
                         attackStartPos = transform.position;
-                        attackFinishPos = player.transform.position + new Vector3(0, 1, 0);
+                        attackFinishPos = targetPlayer.transform.position + new Vector3(0, 1, 0);
                         attackDistance = Vector3.Distance(attackFinishPos, transform.position);
                     }
                 }
@@ -95,7 +100,7 @@ public class SlimeAction : EnemyScript
 
                 if(isTarget)
                 {
-                    if(attackRange >= Vector3.Distance(transform.position, player.transform.position))
+                    if(attackRange >= Vector3.Distance(transform.position, targetPlayer.transform.position))
                     {
                         myAnim.SetBool("Move", false);
                         myState = State.Idle;
@@ -140,20 +145,12 @@ public class SlimeAction : EnemyScript
 
         }
 
-        // プレイヤーを発見
-        if(!isTarget && range >= Vector3.Distance(transform.position, player.transform.position))
-        {
-            isTarget = true;
-            myState = State.Idle;
-            myAnim.SetTrigger("Jump");
-        }
-
         if (isTarget)
         {
             if (myState == State.Idle || myState == State.Walk)
             {
                 // プレイヤーの方を向く
-                gameObject.transform.LookAt(player.transform.position);
+                gameObject.transform.LookAt(targetPlayer.transform.position);
             }
         }
     }
@@ -169,6 +166,25 @@ public class SlimeAction : EnemyScript
             gameObject.transform.LookAt(destination);
             idleInterval = idleIntervalTime;
         }    
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player" && targetPlayer == null)
+        {
+            //　プレイヤーの方向
+            Vector3 playerDirection = other.transform.position - transform.position;
+            //　敵の前方からのプレイヤーの方向
+            float angle = Vector3.Angle(transform.forward, playerDirection);
+            //　サーチする角度内だったらプレイヤー発見
+            if (angle <= searchAngle)
+            {
+                targetPlayer = other.gameObject;
+                isTarget = true;
+                myState = State.Idle;
+                myAnim.SetTrigger("Jump");
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -193,4 +209,21 @@ public class SlimeAction : EnemyScript
     {
         
     }
+#if UNITY_EDITOR
+    //　サーチする角度表示
+    private void OnDrawGizmos()
+    {
+        Handles.color = Color.red;
+        if(myRange == null)
+        {
+            Handles.DrawSolidArc(transform.position, Vector3.up, 
+                                 Quaternion.Euler(0f, -searchAngle, 0f) * transform.forward, searchAngle * 2f, 0);
+        }
+        else
+        {
+            Handles.DrawSolidArc(transform.position, Vector3.up, 
+                                 Quaternion.Euler(0f, -searchAngle, 0f) * transform.forward, searchAngle * 2f, myRange.radius);
+        }
+    }
+#endif
 }

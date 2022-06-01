@@ -701,7 +701,7 @@ Transform:
   m_GameObject: {fileID: 7892576636604548414}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 13, y: 13, z: 13}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7891899594936542596}
@@ -1092,7 +1092,7 @@ Transform:
   m_GameObject: {fileID: 7892576637877124042}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 13, y: 13, z: 13}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7891899595355134580}
@@ -1240,6 +1240,7 @@ GameObject:
   - component: {fileID: 7843615931247335208}
   - component: {fileID: 1097449091920851400}
   - component: {fileID: 1097449091920851399}
+  - component: {fileID: 7115481785998873668}
   - component: {fileID: 1097449091920851401}
   m_Layer: 0
   m_Name: Bat_Enemy
@@ -1257,7 +1258,7 @@ Transform:
   m_GameObject: {fileID: 7892576638033904470}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.897, z: 0}
-  m_LocalScale: {x: 13, y: 13, z: 13}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7891899595793304018}
@@ -1309,11 +1310,24 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7892576638033904470}
   m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 6
+  m_Center: {x: 0, y: -1.5, z: 0}
+--- !u!65 &7115481785998873668
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7892576638033904470}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.02
-  m_Center: {x: 0, y: 0.03, z: 0}
+  m_Size: {x: 1, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!114 &1097449091920851401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1330,7 +1344,8 @@ MonoBehaviour:
   mySpeed: 2
   power: 2
   battleFlg: 0
-  range: 5
+  searchAngle: 90
+  serchRange: 6
   moveRadius: 5
   idleIntervalTime: 3
   attackRange: 2

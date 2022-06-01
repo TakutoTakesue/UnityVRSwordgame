@@ -1274,8 +1274,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6409245332784763049}
   - component: {fileID: 6462250923856991641}
-  - component: {fileID: 6420355303762910421}
   - component: {fileID: 1042521295}
+  - component: {fileID: 6420355303762910421}
+  - component: {fileID: 4908239496732779172}
   - component: {fileID: 1042521294}
   m_Layer: 0
   m_Name: Wizard_Enemy
@@ -1323,20 +1324,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!136 &6420355303762910421
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6411299284858423985}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.7
-  m_Height: 1.882848
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.98, z: 0}
 --- !u!54 &1042521295
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1353,6 +1340,33 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &6420355303762910421
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6411299284858423985}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.7
+  m_Height: 1.882848
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.98, z: 0}
+--- !u!135 &4908239496732779172
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6411299284858423985}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 8
+  m_Center: {x: 0, y: -5.2, z: 0}
 --- !u!114 &1042521294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1369,7 +1383,8 @@ MonoBehaviour:
   mySpeed: 0
   power: 3
   battleFlg: 0
-  range: 7
+  searchAngle: 45
+  serchRange: 8
   entryEffect: {fileID: 100000, guid: 94c01e7752588b342817c68b1bf2360c, type: 3}
   chargeEffect: {fileID: 1749721031}
   AttackIntervalTime: 4
