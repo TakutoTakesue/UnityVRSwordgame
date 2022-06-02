@@ -1968,6 +1968,7 @@ MonoBehaviour:
   LifeGageImage: {fileID: 982618039516593204}
   KasouLifeGageImage: {fileID: 4170286592154571081}
   LifeTex: {fileID: 8736128607141531889}
+  UnityEditorFlg: 1
 --- !u!54 &5184463388752807352
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7599,7 +7600,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4, y: 2}
+  m_AnchoredPosition: {x: -2.95, y: 1.08}
   m_SizeDelta: {x: 1.5, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3247620823892270902
