@@ -47,7 +47,7 @@ public class PlayerScript : MonoBehaviour
 
 
     [SerializeField]
-    float StartLife;               //自身のHPの初期値
+    int StartLife;               //自身のHPの初期値
     [SerializeField]
     Image LifeGageImage;               //自身のHP(ゲージ)
     [SerializeField]
@@ -55,7 +55,7 @@ public class PlayerScript : MonoBehaviour
     int Life;               //自身のHP
     float LifeGage;               //自身のHPゲージ
     float KasouLifeGage;               //自身の仮想HPゲージ
-    float KeepDamage;             //最後に受けたダメージ(連続の場合合算)
+    int KeepDamage;             //最後に受けたダメージ(連続の場合合算)
     float LifeDelay;               //HPが変動し始めるまでに欠かす時間の管理
     float HPlessDelayTime;              //HPゲージが減り始めるまでの時間
     float GageSpeed;                //ゲージの減少、増加速度(この値の)
@@ -94,7 +94,7 @@ public class PlayerScript : MonoBehaviour
 
         HPlessDelayTime = 0.5f;
         KasouLifeGage = StartLife;
-        Life = (int)StartLife;
+        Life = StartLife;
         LifeGage = StartLife;
         LifeDelay = 0;
         GageSpeed = 1;
