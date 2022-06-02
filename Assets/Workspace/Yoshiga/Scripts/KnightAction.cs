@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class KnightAction : EnemyScript
 {
-    private GameObject player;
     private Rigidbody myRB;
     private CapsuleCollider myCollision;
     private Animator myAnim;
@@ -38,7 +37,7 @@ public class KnightAction : EnemyScript
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        base.Start();
         myRB = GetComponent<Rigidbody>();
         myCollision = GetComponent<CapsuleCollider>();
         myAnim = GetComponent<Animator>();
@@ -49,6 +48,8 @@ public class KnightAction : EnemyScript
         entrySpeed = enemyYScale * (Time.deltaTime / 3);
         attackInterval = AttackIntervalTime;
         stepInterval = StepIntervalTime;
+        FindTarget();
+        targetPlayer = nearPlayer;
     }
 
     private void FixedUpdate()
@@ -78,7 +79,7 @@ public class KnightAction : EnemyScript
                 }
 
                 // 少し離れたら追いかける処理
-                if (attackRange + 0.5f < Vector3.Distance(transform.position, player.transform.position))
+                if (attackRange + 0.5f < Vector3.Distance(transform.position, targetPlayer.transform.position))
                 {
                     myAnim.SetBool("StepFlg", false);
                     myState = State.Walk;
@@ -86,13 +87,13 @@ public class KnightAction : EnemyScript
                 }
 
                 // プレイヤーとの距離が近すぎるときに遠ざかる
-                if (attackRange > Vector3.Distance(transform.position, player.transform.position) && attackInterval > 0)
+                if (attackRange > Vector3.Distance(transform.position, targetPlayer.transform.position) && attackInterval > 0)
                 {
-                    myRB.velocity = (transform.position - player.transform.position).normalized * mySpeed / 2;
+                    myRB.velocity = (transform.position - targetPlayer.transform.position).normalized * mySpeed / 2;
                     myAnim.SetBool("StepFlg", false);
                     myAnim.SetFloat("Speed", -mySpeed);
                 }
-                else if(attackRange <= Vector3.Distance(transform.position, player.transform.position))
+                else if(attackRange <= Vector3.Distance(transform.position, targetPlayer.transform.position))
                 {
                     // サイドステップ切り替え処理
                     if (stepInterval > 0)
@@ -114,11 +115,11 @@ public class KnightAction : EnemyScript
 
                     if (myAnim.GetFloat("StepVector") >= 0.5f)
                     {
-                        transform.RotateAround(player.transform.position, Vector3.up, 20 * Time.deltaTime);
+                        transform.RotateAround(targetPlayer.transform.position, Vector3.up, 20 * Time.deltaTime);
                     }
                     else
                     {
-                        transform.RotateAround(player.transform.position, Vector3.up, -20 * Time.deltaTime);
+                        transform.RotateAround(targetPlayer.transform.position, Vector3.up, -20 * Time.deltaTime);
                     }
 
                     // 攻撃に移る処理
@@ -137,9 +138,9 @@ public class KnightAction : EnemyScript
             case State.Walk:
 
                 // プレイヤーとの距離が離れているとプレイヤーに向かって歩く処理
-                if(attackRange <= Vector3.Distance(transform.position, player.transform.position))
+                if(attackRange <= Vector3.Distance(transform.position, targetPlayer.transform.position))
                 {
-                    myRB.velocity = (player.transform.position - transform.position).normalized * mySpeed;
+                    myRB.velocity = (targetPlayer.transform.position - transform.position).normalized * mySpeed;
                     myAnim.SetFloat("Speed", mySpeed);
                 }
                 else
@@ -153,7 +154,7 @@ public class KnightAction : EnemyScript
         if (myState == State.Idle || myState == State.Walk)
         {
             // プレイヤーの方に向く
-            gameObject.transform.LookAt(player.transform.position);
+            gameObject.transform.LookAt(targetPlayer.transform.position);
         }
     }
 
