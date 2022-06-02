@@ -47,16 +47,18 @@ public class PlayerScript : MonoBehaviour
 
 
     [SerializeField]
-    int StartLife;               //自身のHPの初期値
+    float StartLife;               //自身のHPの初期値
     [SerializeField]
     Image LifeGageImage;               //自身のHP(ゲージ)
     [SerializeField]
     Image KasouLifeGageImage;              //自身の仮想HP(ゲージ)
-    int Life;               //自身のHP
-    float KasouLife;               //自身の仮想HP
+    float Life;               //自身のHP
+    float LifeGage;               //自身のHPゲージ
+    float KasouLifeGage;               //自身の仮想HPゲージ
     float KeepDamage;             //最後に受けたダメージ(連続の場合合算)
-    float LifeDelay;               //HPの変動
-    float HPlessDelay;              //HPゲージが減り始めるまでの時間管理
+    float LifeDelay;               //HPが変動し始めるまでに欠かす時間の管理
+    float HPlessDelayTime;              //HPゲージが減り始めるまでの時間
+    float GageSpeed;                //ゲージの減少、増加速度(この値の)
     bool deadflg;               //死んでいるかどうか
     public Text LifeTex;
 
@@ -64,11 +66,15 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField]
     bool UnityEditorFlg = true;
+
+
+    private float moveH;
+    private float moveV;
     void Start()
     {
 
 
-
+#if UNITY_EDITOR
         //消すやつ
         if (UnityEditorFlg)
         {
@@ -79,28 +85,34 @@ public class PlayerScript : MonoBehaviour
         }
         //消すやつここまで
 
-
+#endif
 
 
         Elapced = 0;
         Myanim = GetComponent<Animator>();
         MenuUI.SetActive(false);
 
-        HPlessDelay = 0.5f;
-        KasouLife = StartLife;
+        HPlessDelayTime = 0.5f;
+        KasouLifeGage = StartLife;
         Life = StartLife;
+        LifeGage = StartLife;
         LifeDelay = 0;
+        GageSpeed = 1;
         deadflg = false;
         MyRig = GetComponent<Rigidbody>();
+
+
+
     }
 
     void Update()
     {
+        moveH = OVRInput.Get(OVRInput.RawAxis2D.LThumbstick).x;
+        moveV = OVRInput.Get(OVRInput.RawAxis2D.LThumbstick).y;
+
+#if UNITY_EDITOR
+
         //消すやつ
-
-
-
-
         if (Input.GetKey(KeyCode.G))
         {
             OnDamage(10);
@@ -116,13 +128,7 @@ public class PlayerScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (!StunFlg)
-            {
-                StunFlg = true;
-                Myanim.SetTrigger("Stun");
-                Myanim.Update(0f);
-                StunTime = Myanim.GetCurrentAnimatorStateInfo(0).length;
-            }
+            HitStun();
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
@@ -144,8 +150,12 @@ public class PlayerScript : MonoBehaviour
 
         }
         //消すやつここまで
-        InputMove.x = Input.GetAxis("Horizontal");
-        InputMove.z = Input.GetAxis("Vertical");
+#endif
+
+        InputMove = new Vector3(moveH + Input.GetAxis("Horizontal"), 0, moveV+ Input.GetAxis("Vertical"));
+
+
+
 
     }
     private void OnAnimatorIK(int layerIndex)
@@ -165,11 +175,11 @@ public class PlayerScript : MonoBehaviour
             Myanim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 1);
             Myanim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 1);
             //　右手の位置設定
-            Myanim.SetIKPosition(AvatarIKGoal.RightHand, RightHand.transform.position);
-            Myanim.SetIKRotation(AvatarIKGoal.RightHand, RightHand.transform.rotation);
+            Myanim.SetIKPosition(AvatarIKGoal.RightHand, LeftHand.transform.position);
+            Myanim.SetIKRotation(AvatarIKGoal.RightHand, LeftHand.transform.rotation);
             //　左手の位置設定
-            Myanim.SetIKPosition(AvatarIKGoal.LeftHand, LeftHand.transform.position);
-            Myanim.SetIKRotation(AvatarIKGoal.LeftHand, LeftHand.transform.rotation);
+            Myanim.SetIKPosition(AvatarIKGoal.LeftHand, RightHand.transform.position);
+            Myanim.SetIKRotation(AvatarIKGoal.LeftHand, RightHand.transform.rotation);
 
 
 
@@ -189,24 +199,38 @@ public class PlayerScript : MonoBehaviour
     }
     private void FixedUpdate()
     {
-       // UnityEngine.Debug.Log(LifeDelay + "+" + KasouLife + "+" + KeepDamage);
-        if (Life != KasouLife)
+        //ライフバーの増減
+
+
+
+        if (LifeGage < Life)
+        {
+
+        }
+
+
+        if (Life < KasouLifeGage)
         {
             LifeDelay -= Time.fixedDeltaTime;
             if (LifeDelay < 0)
             {
-                KasouLife -= KeepDamage * Time.fixedDeltaTime * 3;
-                if (KasouLife < Life)
+                KasouLifeGage -= KeepDamage * Time.fixedDeltaTime * 3;
+                if (KasouLifeGage < Life)
                 {
 
-                    KasouLife = Life;
+                    KasouLifeGage = Life;
                 }
             }
+        }
+        else
+        {
+
+            KasouLifeGage = Life;
         }
 
         LifeGageImage.fillAmount = (float)Life / StartLife;
      //   UnityEngine.Debug.Log(Life / StartLife);
-        KasouLifeGageImage.fillAmount = (float)KasouLife / StartLife;
+        KasouLifeGageImage.fillAmount = (float)(KasouLifeGage / StartLife);
         LifeTex.text = "LIFE：" + Life.ToString("d3");
 
 
@@ -330,17 +354,36 @@ public class PlayerScript : MonoBehaviour
     }
     public void OnDamage(int damage)
     {
+        if (!deadflg)
+        {
+            Life -= damage;
+
+
+            if (LifeGage > Life)
+            {
+                LifeGage = Life;
+            }
+            if (Life < 0)
+            {
+                Life = 0;
+                deadflg = true;
+            }
+        }
+
+    }
+    public void OnDamage(int damage, bool stun)
+    {
 
         if (LifeDelay < 0)
         {
-            KasouLife = Life;
+            KasouLifeGage = Life;
             KeepDamage = damage;
         }
         else
         {
             KeepDamage += damage;
         }
-        LifeDelay = HPlessDelay;
+        LifeDelay = HPlessDelayTime;
         UnityEngine.Debug.Log(LifeDelay);
         Life -= damage;
 
@@ -349,6 +392,27 @@ public class PlayerScript : MonoBehaviour
             Life = 0;
             deadflg = true;
         }
+        else if(stun)
+        {
+            HitStun();
+        }
 
     }
+    //スタン攻撃を受けた
+    public void HitStun()
+    {
+        if (!StunFlg && !deadflg)
+        {
+            StunFlg = true;
+            Myanim.SetTrigger("Stun");
+            Myanim.Update(0f);
+            StunTime = Myanim.GetCurrentAnimatorStateInfo(0).length;
+        }
+    }
+    //死んでいるかどうか
+    public bool GetDeadFlg()
+    {
+        return deadflg;
+    }
+
 }
