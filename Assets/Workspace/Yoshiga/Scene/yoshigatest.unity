@@ -457,7 +457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1689987160222253315, guid: 1b88d746de98c5d43b26bb77c570e315, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2035586293046746041, guid: 1b88d746de98c5d43b26bb77c570e315, type: 3}
       propertyPath: m_RootOrder
@@ -575,7 +575,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1500516407013416217, guid: 73622ed98a85b1c4fa0101740c620f4c, type: 3}
       propertyPath: UnityEditorFlg
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3451865236863777341, guid: 73622ed98a85b1c4fa0101740c620f4c, type: 3}
       propertyPath: m_Name
